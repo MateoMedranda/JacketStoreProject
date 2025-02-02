@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+body{
+    background-image: url("../../images/fondo_pantalla.jpg");
+    background-size: cover; /* Ajusta la imagen para cubrir toda la pantalla */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; 
+}
+#enviar:hover {
+  font-size: 20px;
+}
+#restablcer:hover{
+	font-size: 20px;
+}
+#contenedor{
+	background-color: #979797;
+	width: 350px;
+	border: #000000 solid;
+    top: 300px;
+	z-index: 1;
+    position: absolute;
+    left: 400px;
+    top:204px;
+
+	
+}
+
+
+
+input.error {
+  border: 2px solid red; /* Borde rojo en caso de error */
+  background-color: #fdd; /* Fondo rojo claro */
+}
+
+#imagenuno{
+    z-index: 1;
+	position: relative;
+	left: 750px;
+	top: 170px;
+    height: 260px;
+	 border-radius: 50%;
+}
+/* CSS Document */
+
