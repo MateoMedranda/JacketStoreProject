@@ -459,3 +459,11 @@
   width: 80px;
 
 }
+
+#carrito {
+  position: absolute;
+  bottom: -13px;
+  left:850px;
+  height: 90px;
+  width: 80px;
+}
