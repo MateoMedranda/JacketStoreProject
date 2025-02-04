@@ -1,10 +1,18 @@
 .u-section-1 .u-sheet-1 {
-  min-height: 500px;
+  min-height: 848px;
 }
+
+.u-section-1 .u-text-1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 17px auto 0;
+}
+
 .u-section-1 .u-cart-1 {
   width: 1140px;
+  margin-top: 24px;
+  margin-bottom: 39px;
   min-height: 375px;
-  margin: 63px 0 60px;
 }
 
 .u-section-1 .u-table-header-1 {
@@ -17,7 +25,7 @@
   margin-right: 10px;
 }
 
-.u-section-1 .u-text-1 {
+.u-section-1 .u-text-2 {
   font-size: 1.125rem;
 }
 
@@ -30,7 +38,7 @@
   margin-right: 10px;
 }
 
-.u-section-1 .u-text-2 {
+.u-section-1 .u-text-3 {
   font-size: 1.125rem;
 }
 
@@ -43,7 +51,7 @@
   margin-right: 10px;
 }
 
-.u-section-1 .u-text-3 {
+.u-section-1 .u-text-4 {
   font-size: 1.125rem;
 }
 
@@ -111,6 +119,10 @@
 }
 
 @media (max-width: 575px) {
+  .u-section-1 .u-text-1 {
+    font-size: 2.25rem;
+  }
+
   .u-section-1 .u-cart-1 {
     width: 340px;
   }
