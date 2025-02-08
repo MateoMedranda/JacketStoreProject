@@ -124,8 +124,17 @@
     min-height: 491px;
   }
 
+  .u-section-1 .u-layout-cell-1 {
+    min-height: 333px;
+  }
+
   .u-section-1 .u-icon-1 {
-    margin-left: 70px;
+    margin-top: 18px;
+    margin-left: auto;
+  }
+
+  .u-section-1 .u-text-1 {
+    margin-top: 0;
   }
 
   .u-section-1 .u-image-1 {
