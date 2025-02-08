@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 body{
-    background-image: url("../../images/fondo_pantalla.jpg");
+    background-image: url("../images/fondo_pantalla.jpg");
     background-size: cover; /* Ajusta la imagen para cubrir toda la pantalla */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     background-position: center; 
