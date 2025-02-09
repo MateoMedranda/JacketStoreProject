@@ -1,7 +1,7 @@
 const agregar = document.getElementById("agregar");
 let contador = 1;
 
-document.getElementById('imageUpload').addEventListener('change', function(event) {
+document.getElementById('imageUpload').addEventListener('change', function (event) {
     let preview = document.getElementById('imagePreview');
     let files = event.target.files;
 
@@ -13,14 +13,14 @@ document.getElementById('imageUpload').addEventListener('change', function(event
 
     for (let i = 0; i < files.length; i++) {
         let reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             let imgContainer = document.createElement("div");
             imgContainer.classList.add("position-relative", "d-inline-block");
 
             let img = document.createElement("img");
             img.src = e.target.result;
             img.classList.add("img-thumbnail", "rounded", "shadow");
-            img.style.width = "80px"; 
+            img.style.width = "80px";
 
             let deleteBtn = document.createElement("button");
             deleteBtn.innerHTML = "<b>X<b>";
@@ -28,7 +28,7 @@ document.getElementById('imageUpload').addEventListener('change', function(event
             deleteBtn.style.width = "20px";
             deleteBtn.style.height = "20px";
 
-            deleteBtn.addEventListener("click", function() {
+            deleteBtn.addEventListener("click", function () {
                 imgContainer.remove();
             });
 
@@ -41,42 +41,95 @@ document.getElementById('imageUpload').addEventListener('change', function(event
 });
 
 function abrirAgregar() {
-	agregar.showModal();
+    agregar.showModal();
 }
 
-function cerrarAgregar(){
+function cerrarAgregar() {
     document.getElementById("descripcion").value = "";
     document.getElementById("materiales").value = "";
-    document.getElementById("tallas").value = "";
     document.getElementById("colores").value = "";
-    document.getElementById("stock").value = "";
     agregar.close();
+}
+
+function obtenerTallasSeleccionadas() {
+    let tallasSeleccionadas = [];
+
+    document.querySelectorAll('input[type="checkbox"]:checked').forEach((checkbox) => {
+        tallasSeleccionadas.push(checkbox.value);
+    });
+
+    return tallasSeleccionadas;
+}
+
+function obtenerCantidades() {
+    let tallas = ["xs", "s", "m", "l", "xl", "xxl"];
+    let cantidades = {};
+    let cont = 0;
+
+    for(let i=0;i<6;i++){
+        let checkbox = document.getElementById("talla-"+tallas[i]);
+        let inputCantidad = document.getElementById("cantidad" + i);
+
+        if (checkbox.checked) {
+            cantidades[cont] = Number(inputCantidad.value);
+            cont++;
+        }
+    }
+    return cantidades;
+}
+
+function calcularStock() {
+    let suma = 0;
+    for (let i = 0; i < 6; i++) {
+        let id = 'cantidad' + i;
+        suma += Number(document.getElementById(id).value);
+    }
+
+    document.getElementById("stock").value = suma;
+}
+
+function habilitarNum(num) {
+    let check = document.getElementById('cantidad' + num);
+    check.disabled = !check.disabled;
 }
 
 function agregarProducto() {
     event.preventDefault();
     const table = document.getElementById("tablaInventario").getElementsByTagName('tbody')[0];
+    let tallas = obtenerTallasSeleccionadas();
     let descripcion = document.getElementById("descripcion").value;
     let materiales = document.getElementById("materiales").value;
-    let tallas = document.getElementById("tallas").value;
     let colores = document.getElementById("colores").value;
-    let stock = document.getElementById("stock").value;
+    let cantidades = obtenerCantidades();
 
-    let estado = '<p class="bg-success text-white text-center m-0 p-1">Disponible</p>';
-    let editar = '<button class="btn btn-warning btn-sm" onclick="editarFila(this)">✏️</button>';
+    for (let i = 0; i < tallas.length; i++) {
+        let estado = '<p class="bg-warning text-white text-center m-0 p-1">Pendiente</p>';
+        let editar = '<button class="btn btn-warning btn-sm" onclick="editarFila(this)">✏️</button><button class="btn btn-danger btn-sm" onclick="borrarFila(this)">🗑️</button>';
 
-    let nuevaFila = table.insertRow(); 
+        let disponibilidad = "";
 
-    nuevaFila.insertCell(0).innerHTML = '<input type="checkbox">';
-    nuevaFila.insertCell(1).innerText = contador;
-    nuevaFila.insertCell(2).innerText = descripcion;
-    nuevaFila.insertCell(3).innerText = materiales;
-    nuevaFila.insertCell(4).innerText = colores;
-    nuevaFila.insertCell(5).innerText = "1"; 
-    nuevaFila.insertCell(6).innerText = stock;
-    nuevaFila.insertCell(7).innerHTML = estado;
-    nuevaFila.insertCell(8).innerHTML = editar;
+        if(cantidades[i]>=10){
+            disponibilidad = '<p class="bg-success text-white text-center m-0 p-1">Disponible</p>';
+        }else if(cantidades[i]<10 && cantidades[i]!=0){
+            disponibilidad = '<p class="bg-warning text-white text-center m-0 p-1">Por agotarse</p>';
+        }else {
+            disponibilidad = '<p class="bg-danger text-white text-center m-0 p-1">Agotado</p>';
+        }
 
-    contador++; 
+        let nuevaFila = table.insertRow();
+
+        nuevaFila.insertCell(0).innerHTML = contador;
+        nuevaFila.insertCell(1).innerText = descripcion;
+        nuevaFila.insertCell(2).innerText = materiales;
+        nuevaFila.insertCell(3).innerText = tallas[i];
+        nuevaFila.insertCell(4).innerText = colores;
+        nuevaFila.insertCell(5).innerText = cantidades[i];
+        nuevaFila.insertCell(6).innerHTML = disponibilidad;
+        nuevaFila.insertCell(7).innerHTML = estado;
+        nuevaFila.insertCell(8).innerHTML = editar;
+
+        contador++;
+    }
+
     cerrarAgregar();
 }

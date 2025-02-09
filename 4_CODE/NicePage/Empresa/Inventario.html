@@ -31,7 +31,8 @@
   <meta data-intl-tel-input-cdn-path="intlTelInput/">
 </head>
 
-<body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="es" style="background-image: url(../../imagenes/fondoInventario.jpg);">
+<body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="es"
+  style="background-image: url(../../imagenes/fondoInventario.jpg);">
   <header class="u-clearfix u-grey-15 u-header u-header" id="header">
     <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-xl u-sheet-1">
       <a href="#" class="u-image u-logo u-image-1" data-image-width="519" data-image-height="481">
@@ -92,7 +93,7 @@
             </li>
           </ul>
         </div>
-        <div class="u-custom-menu u-nav-container-collapse" >
+        <div class="u-custom-menu u-nav-container-collapse">
           <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
             <div class="u-inner-container-layout u-sidenav-overflow">
               <div class="u-menu-close"></div>
@@ -143,26 +144,26 @@
             <table id="tablaInventario" class="u-table-entity">
               <colgroup>
                 <col width="5.2%">
-                <col width="10.3%">
                 <col width="18.1%">
+                <col width="10.3%">
                 <col width="10.7%">
                 <col width="11.2%">
-                <col width="7.1%">
+                <col width="8.1%">
                 <col width="9.7%">
                 <col width="5.9%">
-                <col width="21.7%">
+                <col width="20.7%">
               </colgroup>
               <thead class="u-align-center u-table-header u-white u-table-header-1">
                 <tr style="height: 21px;">
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell"></th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell"> Id Producto
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Id</th>
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Descripción
                   </th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell"> Descripción
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Materiales
                   </th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell"> Materiales</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell"> Color</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Pedidos</th>
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Tallas</th>
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Colores</th>
                   <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">En stock</th>
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Disponibilidad</th>
                   <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Estado</th>
                   <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell"></th>
                 </tr>
@@ -183,55 +184,90 @@
     <form>
       <div class="row">
 
-          <div class="col-md-7">
-              <div class="mb-3">
-                  <label class="form-label fw-bold">Descripción del producto:</label>
-                  <textarea id="descripcion" class="form-control shadow" rows="3" placeholder="Ej: descripción breve, nombre del producto" required></textarea>
-              </div>
-              <div class="mb-3">
-                  <label class="form-label fw-bold">Materiales:</label>
-                  <textarea id="materiales" class="form-control shadow" rows="3" placeholder="Ej: 100% nylon, 100% algodón" required></textarea>
-              </div>
+        <div class="col-md-7">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Descripción del producto:</label>
+            <textarea id="descripcion" class="form-control shadow" rows="3"
+              placeholder="Ej: descripción breve, nombre del producto" required></textarea>
           </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Materiales:</label>
+            <textarea id="materiales" class="form-control shadow" rows="3" placeholder="Ej: 100% nylon, 100% algodón"
+              required></textarea>
+          </div>
+        </div>
 
-          <div class="col-md-2">
+        <div class="col-md-4 mt-3">
+          
+          <div class="d-flex flex-wrap shadow p-3">
+            <div class="tallas col-3">
               <label class="form-label fw-bold">Tallas:</label>
-              <div class="d-flex flex-column">
-                <textarea id="tallas" class="form-control shadow" rows="9" placeholder="Ej: XL" required></textarea>
+              <div class="form-check mb-2">
+                <input class="form-check-input border-black" type="checkbox" id="talla-xs" onchange="habilitarNum(0)" value="XS">
+                <label class="form-check-label" for="talla-xs">XS</label>
               </div>
-          </div>
-          <div class="col-md-2">
-              <label class="form-label fw-bold">Colores:</label>
-              <div class="d-flex flex-column">
-                <textarea id="colores" class="form-control shadow" rows="9" placeholder="Ej: Negro" required></textarea>
+              <div class="form-check mb-2">
+                <input class="form-check-input border-black" type="checkbox" id="talla-s" onchange="habilitarNum(1)" value="S">
+                <label class="form-check-label" for="talla-s">S</label>
               </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input border-black" type="checkbox" id="talla-m" onchange="habilitarNum(2)" value="M">
+                <label class="form-check-label" for="talla-m">M</label>
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input border-black" type="checkbox" id="talla-l" onchange="habilitarNum(3)" value="L">
+                <label class="form-check-label" for="talla-l">L</label>
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input border-black" type="checkbox" id="talla-xl" onchange="habilitarNum(4)" value="XL">
+                <label class="form-check-label" for="talla-xl">XL</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input border-black" type="checkbox" id="talla-xxl" onchange="habilitarNum(5)" value="XXL">
+                <label class="form-check-label" for="talla-xxl">XXL</label>
+              </div>
+            </div>
+            <div class="cantidades col-5 ms-5">
+              <label class="form-label fw-bold">Cantidad:</label>
+              <input id="cantidad0" type="number" class="w-100" onchange="calcularStock()" placeholder="Ej: 23" disabled>
+              <input id="cantidad1" type="number" class="w-100" onchange="calcularStock()" placeholder="Ej: 23" disabled>
+              <input id="cantidad2" type="number" class="w-100" onchange="calcularStock()" placeholder="Ej: 23" disabled>
+              <input id="cantidad3" type="number" class="w-100" onchange="calcularStock()" placeholder="Ej: 23" disabled>
+              <input id="cantidad4" type="number" class="w-100" onchange="calcularStock()" placeholder="Ej: 23" disabled>
+              <input id="cantidad5" type="number" class="w-100" onchange="calcularStock()" placeholder="Ej: 23" disabled>
+            </div>
           </div>
+        </div>
+
+      </div>
+
+      <div class="row mt-4">
+        <label class="form-label fw-bold">Colores:</label>
+        <div class="d-flex flex-column">
+          <textarea id="colores" class="form-control shadow" rows="1" placeholder="Ej: Negro" required></textarea>
+        </div>
       </div>
 
       <div class="row mt-4">
         <div class="col-md-12">
-            <label class="form-label fw-bold">Imágenes del Producto (máx. 10):</label>
-            <input type="file" class="form-control" id="imageUpload" multiple accept="image/*" required>
-            <div id="imagePreview" class="mt-3 d-flex flex-wrap gap-2"></div>
+          <label class="form-label fw-bold">Imágenes del Producto (máx. 10):</label>
+          <input type="file" class="form-control" id="imageUpload" multiple accept="image/*" required>
+          <div id="imagePreview" class="mt-3 d-flex flex-wrap gap-2"></div>
         </div>
-    </div>
+      </div>
 
       <div class="row mt-3">
-          <div class="col-md-3">
-              <label class="form-label fw-bold">En Stock:</label>
-              <input id="stock" type="number" class="form-control shadow" required>
-          </div>
-          <div class="col-md-3">
-              <label class="form-label fw-bold">Pedidos:</label>
-              <input id="pedido" type="number" class="form-control shadow">
-          </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold">En Stock:</label>
+          <input id="stock" type="number" class="form-control shadow" readonly disabled>
+        </div>
       </div>
 
       <div class="text-center mt-4">
-          <button type="submit" class="btn btn-primary px-4" onclick="agregarProducto()">Guardar</button>
-          <button type="reset" class="btn btn-secondary px-4" onclick="cerrarAgregar()">Cancelar</button>
+        <button type="submit" class="btn btn-primary px-4" onclick="agregarProducto()">Guardar</button>
+        <button type="reset" class="btn btn-secondary px-4" onclick="cerrarAgregar()">Cancelar</button>
       </div>
-  </form>
+    </form>
     </form>
 
   </dialog>
