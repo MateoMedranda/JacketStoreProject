@@ -104,7 +104,7 @@ function agregarProducto() {
 
     for (let i = 0; i < tallas.length; i++) {
         let estado = '<p class="bg-warning text-white text-center m-0 p-1">Pendiente</p>';
-        let editar = '<button class="btn btn-warning btn-sm" onclick="editarFila(this)">✏️</button><button class="btn btn-danger btn-sm" onclick="borrarFila(this)">🗑️</button>';
+        let editar = '<button class="btn btn-warning btn-sm" onclick="editarFila(this)">✏️</button><button class="ms-3 btn btn-danger btn-sm" onclick="borrarFila(this)">🗑️</button>';
 
         let disponibilidad = "";
 
