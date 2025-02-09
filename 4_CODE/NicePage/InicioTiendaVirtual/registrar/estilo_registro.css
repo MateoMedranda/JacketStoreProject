@@ -11,7 +11,7 @@
 
 body {
     font-family: var(--fuente);
-    background-color: #f4f4f4;
+    background-image: url("../images/fondo_pantalla.jpg");
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +23,7 @@ body {
 }
 
 .contenedor {
-    background-color: var(--moradoBlanco);
+    background-color: #979795;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

@@ -13,14 +13,13 @@ body{
 	font-size: 20px;
 }
 #contenedor{
-	background-color: #979797;
+	background-color: #979795;
 	width: 350px;
-	border: #000000 solid;
-    top: 300px;
+    height: 270px;
+	border: #000000 1px solid;
+   
 	z-index: 1;
-    position: absolute;
-    left: 400px;
-    top:204px;
+
 
 	
 }
@@ -34,11 +33,13 @@ input.error {
 
 #imagenuno{
     z-index: 1;
-	position: relative;
-	left: 750px;
-	top: 170px;
+
+
     height: 260px;
 	 border-radius: 50%;
 }
-/* CSS Document */
+p {
+    font-weight: bold;
+    font-size: 18px;
+}
 
