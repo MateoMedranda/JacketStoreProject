@@ -1,4 +1,5 @@
 const agregar = document.getElementById("agregar");
+let contador = 1;
 
 document.getElementById('imageUpload').addEventListener('change', function(event) {
     let preview = document.getElementById('imagePreview');
@@ -38,6 +39,44 @@ document.getElementById('imageUpload').addEventListener('change', function(event
         reader.readAsDataURL(files[i]);
     }
 });
+
 function abrirAgregar() {
 	agregar.showModal();
+}
+
+function cerrarAgregar(){
+    document.getElementById("descripcion").value = "";
+    document.getElementById("materiales").value = "";
+    document.getElementById("tallas").value = "";
+    document.getElementById("colores").value = "";
+    document.getElementById("stock").value = "";
+    agregar.close();
+}
+
+function agregarProducto() {
+    event.preventDefault();
+    const table = document.getElementById("tablaInventario").getElementsByTagName('tbody')[0];
+    let descripcion = document.getElementById("descripcion").value;
+    let materiales = document.getElementById("materiales").value;
+    let tallas = document.getElementById("tallas").value;
+    let colores = document.getElementById("colores").value;
+    let stock = document.getElementById("stock").value;
+
+    let estado = '<p class="bg-success text-white text-center m-0 p-1">Disponible</p>';
+    let editar = '<button class="btn btn-warning btn-sm" onclick="editarFila(this)">✏️</button>';
+
+    let nuevaFila = table.insertRow(); 
+
+    nuevaFila.insertCell(0).innerHTML = '<input type="checkbox">';
+    nuevaFila.insertCell(1).innerText = contador;
+    nuevaFila.insertCell(2).innerText = descripcion;
+    nuevaFila.insertCell(3).innerText = materiales;
+    nuevaFila.insertCell(4).innerText = colores;
+    nuevaFila.insertCell(5).innerText = "1"; 
+    nuevaFila.insertCell(6).innerText = stock;
+    nuevaFila.insertCell(7).innerHTML = estado;
+    nuevaFila.insertCell(8).innerHTML = editar;
+
+    contador++; 
+    cerrarAgregar();
 }
