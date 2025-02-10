@@ -174,6 +174,21 @@ function agregarProducto() {
     localStorage.setItem("productos", JSON.stringify(listaProductos));
     cerrarAgregar();
 }
+function borrarFila(button) {
 
+    let row = button.closest('tr');
+
+    let rowIndex = row.rowIndex-1;
+    alert(rowIndex);
+  
+    table.deleteRow(rowIndex);
+    
+  
+    let idToDelete = row.cells[0].innerText; 
+    listaProductos = listaProductos.filter(producto => producto.contador != idToDelete);
+    
+
+    localStorage.setItem("productos", JSON.stringify(listaProductos));
+}
 
 
