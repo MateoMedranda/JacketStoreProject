@@ -85,7 +85,7 @@
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="Inventario.html" style="padding: 10px 20px;">Inventario</a>
+                href="Inventario.php" style="padding: 10px 20px;">Inventario</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
@@ -100,7 +100,7 @@
               <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
                 <li class="u-nav-item"><a class="u-button-style u-nav-link" href="./">Inicio</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Inventario.html">Inventario</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Inventario.php">Inventario</a>
                 </li>
                 <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Productos.html">Productos</a>
                 </li>
@@ -187,12 +187,12 @@
         <div class="col-md-7">
           <div class="mb-3">
             <label class="form-label fw-bold">Descripción del producto:</label>
-            <textarea id="descripcion" class="form-control shadow" rows="3"
+            <textarea id="descripcion" name="descripcion" class="form-control shadow" rows="3"
               placeholder="Ej: descripción breve, nombre del producto" required></textarea>
           </div>
           <div class="mb-3">
             <label class="form-label fw-bold">Materiales:</label>
-            <textarea id="materiales" class="form-control shadow" rows="3" placeholder="Ej: 100% nylon, 100% algodón"
+            <textarea id="materiales" name="material" class="form-control shadow" rows="3" placeholder="Ej: 100% nylon, 100% algodón"
               required></textarea>
           </div>
         </div>

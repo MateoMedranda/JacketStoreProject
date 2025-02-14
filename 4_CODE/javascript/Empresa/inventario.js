@@ -1,43 +1,62 @@
 const agregar = document.getElementById("agregar");
 const table = document.getElementById("tablaInventario").getElementsByTagName('tbody')[0];
-let listaProductos = JSON.parse(localStorage.getItem("productos")) || [];
-let contador =  listaProductos.length > 0 ? listaProductos.length + 1 : 1;
+let listaProductos = [];
+let contador;
 let editar = '<button class="btn btn-warning btn-sm" onclick="editarFila(this)">✏️</button><button class="ms-3 btn btn-danger btn-sm" onclick="borrarFila(this)">🗑️</button>';
 
-if(listaProductos.length != 0){
+fetch(`../../php/mostrar.php`)  
+    .then(response => response.json())  
+    .then(data => {
+        console.log("Datos recibidos:", data);
+        if (data.error) {
+            console.error("Error en la respuesta del servidor:", data.error);
+        } else {
+            alert("Datos cargados correctamente");
+            listaProductos = data;
+            llenarTabla();
+        }
+    })
+    .catch(error => console.error("Error en la solicitud fetch:", error));
 
+
+contador = listaProductos.length > 0 ? listaProductos.length + 1 : 1;
+
+
+function llenarTabla() {
+    table.innerHTML = ""; // Limpia la tabla antes de llenarla
     listaProductos.forEach((producto) => {
-        let nuevaFilaA = table.insertRow();
-        let disponibilidadA="";
-        let estadoA = "";
+        let nuevaFila = table.insertRow();
+        let disponibilidad = "";
+        let estado = "";
 
-        nuevaFilaA.insertCell(0).innerHTML = producto.contador;
-        nuevaFilaA.insertCell(1).innerText = producto.descripcion;
-        nuevaFilaA.insertCell(2).innerText = producto.materiales;
-        nuevaFilaA.insertCell(3).innerText = producto.talla;
-        nuevaFilaA.insertCell(4).innerText = producto.colores;
-        nuevaFilaA.insertCell(5).innerText = producto.cantidad;
+        nuevaFila.insertCell(0).innerText = producto.PRODUCTO_ID;
+        nuevaFila.insertCell(1).innerText = producto.PRODUCTO_DESCRIPCION;
+        nuevaFila.insertCell(2).innerText = producto.PRODUCTO_MATERIAL;
+        nuevaFila.insertCell(3).innerText = producto.PRODUCTO_TALLA;
+        nuevaFila.insertCell(4).innerText = producto.PRODUCTO_COLOR;
+        nuevaFila.insertCell(5).innerText = producto.PRODUCTO_STOCK;
 
-        if(producto.cantidad>=10){
-            disponibilidadA = '<p class="bg-success text-white text-center m-0 p-1">Disponible</p>';
-        }else if(producto.cantidad<10 && producto.cantidad!=0){
-            disponibilidadA = '<p class="bg-warning text-white text-center m-0 p-1">Por agotarse</p>';
-        }else {
-            disponibilidadA = '<p class="bg-danger text-white text-center m-0 p-1">Agotado</p>';
+        if (producto.PRODUCTO_STOCK >= 10) {
+            disponibilidad = '<p class="bg-success text-white text-center m-0 p-1">Disponible</p>';
+        } else if (producto.PRODUCTO_STOCK > 0) {
+            disponibilidad = '<p class="bg-warning text-white text-center m-0 p-1">Por agotarse</p>';
+        } else {
+            disponibilidad = '<p class="bg-danger text-white text-center m-0 p-1">Agotado</p>';
         }
 
-        nuevaFilaA.insertCell(6).innerHTML = disponibilidadA;
+        nuevaFila.insertCell(6).innerHTML = disponibilidad;
 
-        if(producto.estadoP == "pendiente"){
-            estadoA = '<p class="bg-warning text-white text-center m-0 p-1">Pendiente</p>';
-        }else {
-            estadoA = '<p class="bg-success text-white text-center m-0 p-1">Publicado</p>';
+        if (producto.PRODUCTO_ESTADO === "pendiente") {
+            estado = '<p class="bg-warning text-white text-center m-0 p-1">Pendiente</p>';
+        } else {
+            estado = '<p class="bg-success text-white text-center m-0 p-1">Publicado</p>';
         }
 
-        nuevaFilaA.insertCell(7).innerHTML = estadoA;
-        nuevaFilaA.insertCell(8).innerHTML = editar;
-    });   
+        nuevaFila.insertCell(7).innerHTML = estado;
+        nuevaFila.insertCell(8).innerHTML = editar;
+    });
 }
+
 
 document.getElementById('imageUpload').addEventListener('change', function (event) {
     let preview = document.getElementById('imagePreview');
