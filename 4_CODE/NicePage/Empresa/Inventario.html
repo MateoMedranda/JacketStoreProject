@@ -181,7 +181,7 @@
   <dialog id="agregar" class="w-50 mt-5 p-4 border rounded shadow">
     <h3 class="text-center bg-dark bg-gradient text-white">Producto</h3>
 
-    <form method="post" action="../../php/registraProducto.php">
+    <form method="post">
       <div class="row">
 
         <div class="col-md-7">
@@ -264,8 +264,9 @@
       </div>
 
       <div class="text-center mt-4">
-        <input type="submit" name="enviar" id="enviar" value="Enviar">
-      <input type="reset" name="limpiar" id="limpiar" value="Restablecer">
+        <button type="button" class="btn btn-primary" id="registrar" onclick="enviarFormulario('registrar')">Registrar</button>
+        <button type="button" class="btn btn-warning" id="actualizar" onclick="enviarFormulario('actualizar')">Actualizar</button>
+        <button type="reset" class="btn btn-danger" onclick="cerrarAgregar()">Cancelar</button>
       </div>
     </form>
     </form>

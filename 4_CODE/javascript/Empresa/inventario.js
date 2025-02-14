@@ -2,7 +2,8 @@ const agregar = document.getElementById("agregar");
 const table = document.getElementById("tablaInventario").getElementsByTagName('tbody')[0];
 let listaProductos = [];
 let contador;
-let editar = '<button class="btn btn-warning btn-sm" onclick="editarFila(this)">✏️</button><button class="ms-3 btn btn-danger btn-sm" onclick="borrarFila(this)">🗑️</button>';
+
+document.getElementById("actualizar").style.display = "none";
 
 fetch(`../../php/mostrar.php`)  
     .then(response => response.json())  
@@ -11,7 +12,6 @@ fetch(`../../php/mostrar.php`)
         if (data.error) {
             console.error("Error en la respuesta del servidor:", data.error);
         } else {
-            alert("Datos cargados correctamente");
             listaProductos = data;
             llenarTabla();
         }
@@ -28,6 +28,7 @@ function llenarTabla() {
         let nuevaFila = table.insertRow();
         let disponibilidad = "";
         let estado = "";
+        let editar = '<button class="btn btn-warning btn-sm" onclick="editarFila('+ producto.PRODUCTO_ID+')">✏️</button><button class="ms-3 btn btn-danger btn-sm" onclick="borrarFila(this)">🗑️</button>';
 
         nuevaFila.insertCell(0).innerText = producto.PRODUCTO_ID;
         nuevaFila.insertCell(1).innerText = producto.PRODUCTO_DESCRIPCION;
@@ -105,6 +106,10 @@ function cerrarAgregar() {
     document.getElementById("descripcion").value = "";
     document.getElementById("materiales").value = "";
     document.getElementById("colores").value = "";
+    
+    document.getElementById("actualizar").style.display = "none";
+    document.getElementById("registrar").style.display = "inline";
+
     agregar.close();
 }
 
@@ -193,6 +198,7 @@ function agregarProducto() {
     localStorage.setItem("productos", JSON.stringify(listaProductos));
     cerrarAgregar();
 }
+
 function borrarFila(button) {
 
     let row = button.closest('tr');
@@ -209,5 +215,26 @@ function borrarFila(button) {
 
     localStorage.setItem("productos", JSON.stringify(listaProductos));
 }
+
+function enviarFormulario(accion) {
+    var form = document.getElementById('productoForm');
+
+    if (accion === 'actualizar') {
+      form.action = '../../php/actualizar.php';
+      document.getElementById('accion').value = 'actualizar';
+    } else {
+      form.action = '../../php/registraProducto.php';
+      document.getElementById('accion').value = 'registrar';
+    }
+
+    form.submit();
+  }
+
+function editarFila(id){
+    document.getElementById("registrar").style.display = "none";
+    document.getElementById("actualizar").style.display = "inline";
+    abrirAgregar();
+}
+
 
 
