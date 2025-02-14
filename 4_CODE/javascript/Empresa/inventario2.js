@@ -1,39 +1,55 @@
 const table = document.getElementById("tablaProductos").getElementsByTagName('tbody')[0];
-let listaProductos = JSON.parse(localStorage.getItem("productos")) || [];
-let contador =  listaProductos.length > 0 ? listaProductos.length + 1 : 1;
+let listaProductos = [];
+let contador;
 let editar = '<button class="btn btn-warning btn-sm" onclick="editarFila(this)">✏️</button>';
 
-if(listaProductos.length != 0){
+fetch(`../../php/mostrar.php`)  
+    .then(response => response.json())  
+    .then(data => {
+        console.log("Datos recibidos:", data);
+        if (data.error) {
+            console.error("Error en la respuesta del servidor:", data.error);
+        } else {
+            listaProductos = data;
+            llenarTabla();
+        }
+    })
+    .catch(error => console.error("Error en la solicitud fetch:", error));
 
+
+contador = listaProductos.length > 0 ? listaProductos.length + 1 : 1;
+
+function llenarTabla() {
+    table.innerHTML = ""; 
     listaProductos.forEach((producto) => {
-        let nuevaFilaA = table.insertRow();
-        let disponibilidadA = "";
-        let estadoA = "";
+        let nuevaFila = table.insertRow();
+        let disponibilidad = "";
+        let estado = "";
 
-        nuevaFilaA.insertCell(0).innerHTML = producto.contador;
-        nuevaFilaA.insertCell(1).innerText = producto.descripcion;
-        nuevaFilaA.insertCell(2).innerText = producto.talla;
-        nuevaFilaA.insertCell(3).innerText = "$ 0";
-        nuevaFilaA.insertCell(4).innerText = "0 %";
-        nuevaFilaA.insertCell(5).innerText = "Sin agregar";
+        nuevaFila.insertCell(0).innerText = producto.PRODUCTO_ID;
+        nuevaFila.insertCell(1).innerText = producto.PRODUCTO_DESCRIPCION;
+        nuevaFila.insertCell(2).innerText = producto.PRODUCTO_TALLA;
+        nuevaFila.insertCell(3).innerText = producto.PRODUCTO_PRECIO;
+        nuevaFila.insertCell(4).innerText = producto.PRODUCTO_DESCUENTO;
+        nuevaFila.insertCell(5).innerText = 'AUN NO PROGRAMADO';
 
-        if(producto.cantidad>=10){
-            disponibilidadA = '<p class="bg-success text-white text-center m-0 p-1">Disponible</p>';
-        }else if(producto.cantidad<10 && producto.cantidad!=0){
-            disponibilidadA = '<p class="bg-warning text-white text-center m-0 p-1">Por agotarse</p>';
-        }else {
-            disponibilidadA = '<p class="bg-danger text-white text-center m-0 p-1">Agotado</p>';
+        if (producto.PRODUCTO_STOCK >= 10) {
+            disponibilidad = '<p class="bg-success text-white text-center m-0 p-1">Disponible</p>';
+        } else if (producto.PRODUCTO_STOCK > 0) {
+            disponibilidad = '<p class="bg-warning text-white text-center m-0 p-1">Por agotarse</p>';
+        } else {
+            disponibilidad = '<p class="bg-danger text-white text-center m-0 p-1">Agotado</p>';
         }
 
-        nuevaFilaA.insertCell(6).innerHTML = disponibilidadA;
+        nuevaFila.insertCell(6).innerHTML = disponibilidad;
 
-        if(producto.estadoP == "pendiente"){
-            estadoA = '<p class="bg-warning text-white text-center m-0 p-1">Pendiente</p>';
-        }else {
-            estadoA = '<p class="bg-success text-white text-center m-0 p-1">Publicado</p>';
+        if (producto.PRODUCTO_ESTADO === "pendiente") {
+            estado = '<p class="bg-warning text-white text-center m-0 p-1">Pendiente</p>';
+        } else {
+            estado = '<p class="bg-success text-white text-center m-0 p-1">Publicado</p>';
         }
 
-        nuevaFilaA.insertCell(7).innerHTML = estadoA;
-        nuevaFilaA.insertCell(8).innerHTML = editar;
-    });   
+        nuevaFila.insertCell(7).innerHTML = estado;
+        nuevaFila.insertCell(8).innerHTML = editar;
+    });
 }

@@ -23,7 +23,7 @@ contador = listaProductos.length > 0 ? listaProductos.length + 1 : 1;
 
 
 function llenarTabla() {
-    table.innerHTML = ""; // Limpia la tabla antes de llenarla
+    table.innerHTML = ""; 
     listaProductos.forEach((producto) => {
         let nuevaFila = table.insertRow();
         let disponibilidad = "";
