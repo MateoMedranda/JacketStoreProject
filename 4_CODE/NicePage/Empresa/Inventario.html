@@ -85,7 +85,7 @@
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="Inventario.php" style="padding: 10px 20px;">Inventario</a>
+                href="inventario.html" style="padding: 10px 20px;">Inventario</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
@@ -100,7 +100,7 @@
               <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
                 <li class="u-nav-item"><a class="u-button-style u-nav-link" href="./">Inicio</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Inventario.php">Inventario</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="inventario.html">Inventario</a>
                 </li>
                 <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Productos.html">Productos</a>
                 </li>
@@ -181,7 +181,7 @@
   <dialog id="agregar" class="w-50 mt-5 p-4 border rounded shadow">
     <h3 class="text-center bg-dark bg-gradient text-white">Producto</h3>
 
-    <form>
+    <form method="post" action="../../php/registraProducto.php">
       <div class="row">
 
         <div class="col-md-7">
@@ -203,38 +203,38 @@
             <div class="tallas col-3">
               <label class="form-label fw-bold">Tallas:</label>
               <div class="form-check mb-2">
-                <input class="form-check-input border-black" type="checkbox" id="talla-xs" onchange="habilitarNum(0)" value="XS">
+                <input class="form-check-input border-black" type="checkbox" id="talla-xs" name="opciones[]" onchange="habilitarNum(0)" value="XS">
                 <label class="form-check-label" for="talla-xs">XS</label>
               </div>
               <div class="form-check mb-2">
-                <input class="form-check-input border-black" type="checkbox" id="talla-s" onchange="habilitarNum(1)" value="S">
+                <input class="form-check-input border-black" type="checkbox" id="talla-s" name="opciones[]" onchange="habilitarNum(1)" value="S">
                 <label class="form-check-label" for="talla-s">S</label>
               </div>
               <div class="form-check mb-2">
-                <input class="form-check-input border-black" type="checkbox" id="talla-m" onchange="habilitarNum(2)" value="M">
+                <input class="form-check-input border-black" type="checkbox" id="talla-m" name="opciones[]" onchange="habilitarNum(2)" value="M">
                 <label class="form-check-label" for="talla-m">M</label>
               </div>
               <div class="form-check mb-2">
-                <input class="form-check-input border-black" type="checkbox" id="talla-l" onchange="habilitarNum(3)" value="L">
+                <input class="form-check-input border-black" type="checkbox" id="talla-l" name="opciones[]" onchange="habilitarNum(3)" value="L">
                 <label class="form-check-label" for="talla-l">L</label>
               </div>
               <div class="form-check mb-2">
-                <input class="form-check-input border-black" type="checkbox" id="talla-xl" onchange="habilitarNum(4)" value="XL">
+                <input class="form-check-input border-black" type="checkbox" id="talla-xl" name="opciones[]" onchange="habilitarNum(4)" value="XL">
                 <label class="form-check-label" for="talla-xl">XL</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input border-black" type="checkbox" id="talla-xxl" onchange="habilitarNum(5)" value="XXL">
+                <input class="form-check-input border-black" type="checkbox" id="talla-xxl" name="opciones[]" onchange="habilitarNum(5)" value="XXL">
                 <label class="form-check-label" for="talla-xxl">XXL</label>
               </div>
             </div>
             <div class="cantidades col-5 ms-5">
               <label class="form-label fw-bold">Cantidad:</label>
-              <input id="cantidad0" type="number" class="w-100" onchange="calcularStock()" placeholder="Ej: 23" disabled>
-              <input id="cantidad1" type="number" class="w-100" onchange="calcularStock()" placeholder="Ej: 23" disabled>
-              <input id="cantidad2" type="number" class="w-100" onchange="calcularStock()" placeholder="Ej: 23" disabled>
-              <input id="cantidad3" type="number" class="w-100" onchange="calcularStock()" placeholder="Ej: 23" disabled>
-              <input id="cantidad4" type="number" class="w-100" onchange="calcularStock()" placeholder="Ej: 23" disabled>
-              <input id="cantidad5" type="number" class="w-100" onchange="calcularStock()" placeholder="Ej: 23" disabled>
+              <input id="cantidad0" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
+              <input id="cantidad1" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
+              <input id="cantidad2" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
+              <input id="cantidad3" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
+              <input id="cantidad4" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
+              <input id="cantidad5" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
             </div>
           </div>
         </div>
@@ -244,7 +244,7 @@
       <div class="row mt-4">
         <label class="form-label fw-bold">Colores:</label>
         <div class="d-flex flex-column">
-          <textarea id="colores" class="form-control shadow" rows="1" placeholder="Ej: Negro" required></textarea>
+          <textarea id="colores" name="color" class="form-control shadow" rows="1" placeholder="Ej: Negro" required></textarea>
         </div>
       </div>
 
@@ -264,8 +264,8 @@
       </div>
 
       <div class="text-center mt-4">
-        <button type="submit" class="btn btn-primary px-4" onclick="agregarProducto()">Guardar</button>
-        <button type="reset" class="btn btn-secondary px-4" onclick="cerrarAgregar()">Cancelar</button>
+        <input type="submit" name="enviar" id="enviar" value="Enviar">
+      <input type="reset" name="limpiar" id="limpiar" value="Restablecer">
       </div>
     </form>
     </form>
