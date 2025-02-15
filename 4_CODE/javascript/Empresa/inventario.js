@@ -1,6 +1,7 @@
 const agregar = document.getElementById("agregar");
 const table = document.getElementById("tablaInventario").getElementsByTagName('tbody')[0];
 let listaProductos = [];
+let listaAuxiliar = [];
 let contador;
 
 document.getElementById("actualizar").style.display = "none";
@@ -22,6 +23,7 @@ fetch(`../../php/mostrar.php`)
 
 contador = listaProductos.length > 0 ? listaProductos.length + 1 : 1;
 
+listaAuxiliar = listaProductos;
 
 function llenarTabla() {
     table.innerHTML = ""; 
@@ -261,6 +263,24 @@ function obtenerProducto(id) {
     abrirAgregar();
 }
 
-
+function buscarPorNombre(){
+    let cadena = document.getElementById("buscar").value;
+    fetch("../../php/buscarNombreProducto.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "buscar=" + cadena
+    })
+    .then(response => response.json()) 
+    .then(data => {      
+        console.log("Datos recibidos:", data);
+        if (data.error) {
+            console.error("Error en la respuesta del servidor:", data.error);
+        } else {
+            listaProductos = data;
+            llenarTabla();
+        }
+    })
+    .catch(error => console.error("Error al obtener el producto:", error));
+}   
 
 
