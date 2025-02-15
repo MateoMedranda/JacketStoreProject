@@ -224,10 +224,8 @@ function enviarFormulario(accion) {
 
     if (accion === 'actualizar') {
       form.action = '../../php/actualizar.php';
-      document.getElementById('accion').value = 'actualizar';
     } else {
       form.action = '../../php/registraProducto.php';
-      document.getElementById('accion').value = 'registrar';
     }
 
     form.submit();
