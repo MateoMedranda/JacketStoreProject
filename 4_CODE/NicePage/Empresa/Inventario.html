@@ -200,7 +200,7 @@
         <div class="col-md-4 mt-3">
           
           <div class="d-flex flex-wrap shadow p-3">
-            <div class="tallas col-3">
+            <div id="tallasFormA" class="tallas col-3">
               <label class="form-label fw-bold">Tallas:</label>
               <div class="form-check mb-2">
                 <input class="form-check-input border-black" type="checkbox" id="talla-xs" name="opciones[]" onchange="habilitarNum(0)" value="XS">
@@ -227,7 +227,7 @@
                 <label class="form-check-label" for="talla-xxl">XXL</label>
               </div>
             </div>
-            <div class="cantidades col-5 ms-5">
+            <div id="tallasFormB" class="cantidades col-5 ms-5">
               <label class="form-label fw-bold">Cantidad:</label>
               <input id="cantidad0" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
               <input id="cantidad1" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
@@ -236,6 +236,15 @@
               <input id="cantidad4" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
               <input id="cantidad5" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
             </div>
+
+            <div id="actualizarForm" class="col-9">
+              <label class="form-label" for="tallaA">Talla</label>
+              <input id="tallaA" type="text" class="form-control border-black" name="tallaA" disabled>
+              <br>
+              <label class="form-label" for="tallaA">Cantidad</label>
+              <input id="cantidadA" type="number" class="w-50" onchange="calcularStock()" name="cantidadA" placeholder="Ej: 23">
+            </div>
+
           </div>
         </div>
 
@@ -256,7 +265,7 @@
         </div>
       </div>
 
-      <div class="row mt-3">
+      <div id="stockD" class="row mt-3">
         <div class="col-md-3">
           <label class="form-label fw-bold">En Stock:</label>
           <input id="stock" type="number" class="form-control shadow" readonly disabled>

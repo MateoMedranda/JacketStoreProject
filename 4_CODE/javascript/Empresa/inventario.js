@@ -4,6 +4,7 @@ let listaProductos = [];
 let contador;
 
 document.getElementById("actualizar").style.display = "none";
+document.getElementById("actualizarForm").style.display = "none";
 
 fetch(`../../php/mostrar.php`)  
     .then(response => response.json())  
@@ -28,7 +29,7 @@ function llenarTabla() {
         let nuevaFila = table.insertRow();
         let disponibilidad = "";
         let estado = "";
-        let editar = '<button class="btn btn-warning btn-sm" onclick="editarFila('+ producto.PRODUCTO_ID+')">✏️</button><button class="ms-3 btn btn-danger btn-sm" onclick="borrarFila(this)">🗑️</button>';
+        let editar = '<button class="btn btn-warning btn-sm" onclick="obtenerProducto('+ producto.PRODUCTO_ID+')">✏️</button><button class="ms-3 btn btn-danger btn-sm" onclick="borrarFila(this)">🗑️</button>';
 
         nuevaFila.insertCell(0).innerText = producto.PRODUCTO_ID;
         nuevaFila.insertCell(1).innerText = producto.PRODUCTO_DESCRIPCION;
@@ -106,10 +107,12 @@ function cerrarAgregar() {
     document.getElementById("descripcion").value = "";
     document.getElementById("materiales").value = "";
     document.getElementById("colores").value = "";
-    
     document.getElementById("actualizar").style.display = "none";
     document.getElementById("registrar").style.display = "inline";
-
+    document.getElementById("actualizarForm").style.display = "none";
+    document.getElementById("tallasFormA").style.display = "inline";
+    document.getElementById("tallasFormB").style.display = "inline";
+    document.getElementById("stockD").style.display = "inline";
     agregar.close();
 }
 
@@ -230,11 +233,34 @@ function enviarFormulario(accion) {
     form.submit();
   }
 
-function editarFila(id){
-    document.getElementById("registrar").style.display = "none";
+function obtenerProducto(id) {
+    document.getElementById("actualizarForm").style.display = "inline";
     document.getElementById("actualizar").style.display = "inline";
+    document.getElementById("registrar").style.display = "none";
+    document.getElementById("tallasFormA").style.display = "none";
+    document.getElementById("tallasFormB").style.display = "none";
+    document.getElementById("stockD").style.display = "none";
+    console.log("ID enviado:", id);
+    fetch("../../php/editarProducto.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "producto_id=" + id
+    })
+    .then(response => response.json()) 
+    .then(data => {
+        console.log("Datos recibidos:", data);
+        document.getElementById("descripcion").value = data.PRODUCTO_DESCRIPCION;
+        document.getElementById("materiales").value = data.PRODUCTO_MATERIAL;
+        document.getElementById("colores").value = data.PRODUCTO_COLOR;
+        document.getElementById("tallaA").value = data.PRODUCTO_TALLA;
+        document.getElementById("cantidadA").value = data.PRODUCTO_STOCK;
+        
+
+    })
+    .catch(error => console.error("Error al obtener el producto:", error));
     abrirAgregar();
 }
+
 
 
 
