@@ -113,6 +113,7 @@ function cerrarAgregar() {
     document.getElementById("tallasFormA").style.display = "inline";
     document.getElementById("tallasFormB").style.display = "inline";
     document.getElementById("stockD").style.display = "inline";
+    document.getElementById("idProducto").value = 0;
     agregar.close();
 }
 
@@ -238,6 +239,7 @@ function obtenerProducto(id) {
     document.getElementById("tallasFormA").style.display = "none";
     document.getElementById("tallasFormB").style.display = "none";
     document.getElementById("stockD").style.display = "none";
+    document.getElementById("idProducto").value = id;
     console.log("ID enviado:", id);
     fetch("../../php/editarProducto.php", {
         method: "POST",

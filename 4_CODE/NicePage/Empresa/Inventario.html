@@ -183,6 +183,7 @@
 
     <form id="productoForm" method="post">
       <div class="row">
+        <input type="number" id="idProducto"  name="idProducto" style="display: none;">
 
         <div class="col-md-7">
           <div class="mb-3">
@@ -239,10 +240,10 @@
 
             <div id="actualizarForm" class="col-9">
               <label class="form-label" for="tallaA">Talla</label>
-              <input id="tallaA" type="text" class="form-control border-black" name="tallaA" disabled>
+              <input id="tallaA" name="tallaA" type="text" class="form-control border-black" name="tallaA" disabled>
               <br>
               <label class="form-label" for="tallaA">Cantidad</label>
-              <input id="cantidadA" type="number" class="w-50" onchange="calcularStock()" name="cantidadA" placeholder="Ej: 23">
+              <input id="cantidadA" name="cantidadA" type="number" class="w-50" onchange="calcularStock()" name="cantidadA" placeholder="Ej: 23">
             </div>
 
           </div>
