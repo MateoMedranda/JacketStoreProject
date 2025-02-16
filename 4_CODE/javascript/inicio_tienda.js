@@ -62,18 +62,21 @@ function mostrarProductosUnicosConTallas() {
   const productosMap = {};
 
   listaProductos.forEach(producto => {
-    if (!productosMap[producto.PRODUCTO_DESCRIPCION]) {
-      productosMap[producto.PRODUCTO_DESCRIPCION] = {
-        id: producto.PRODUCTO_ID,
-        descripcion: producto.PRODUCTO_DESCRIPCION,
-        precio: producto.PRODUCTO_PRECIO,
-        descuento: producto.PRODUCTO_DESCUENTO || 0,
-        imagen: producto.PRODUCTO_IMAGEN || "imagenes/default.jpg",
-        estado: producto.PRODUCTO_ESTADO,
-        tallas: []
-      };
+    if (producto.PRODUCTO_ESTADO == "publicado") {
+
+      if (!productosMap[producto.PRODUCTO_DESCRIPCION]) {
+        productosMap[producto.PRODUCTO_DESCRIPCION] = {
+          id: producto.PRODUCTO_ID,
+          descripcion: producto.PRODUCTO_DESCRIPCION,
+          precio: producto.PRODUCTO_PRECIO,
+          descuento: producto.PRODUCTO_DESCUENTO || 0,
+          imagen: producto.PRODUCTO_IMAGEN || "imagenes/default.jpg",
+          estado: producto.PRODUCTO_ESTADO,
+          tallas: []
+        };
+      }
+      productosMap[producto.PRODUCTO_DESCRIPCION].tallas.push(producto.PRODUCTO_TALLA);
     }
-    productosMap[producto.PRODUCTO_DESCRIPCION].tallas.push(producto.PRODUCTO_TALLA);
   });
 
   const productosUnicos = Object.values(productosMap);
@@ -81,10 +84,13 @@ function mostrarProductosUnicosConTallas() {
   const contenedor = document.getElementById("contenedor-productos");
   contenedor.innerHTML = "";
 
+  console.log(productosUnicos);
+
   contenedor.innerHTML = productosUnicos.map(producto => {
     let precioOriginal = Number(producto.precio) || 0;
     let precioConDescuento = (precioOriginal * (1 - Number(producto.descuento) / 100)).toFixed(2);
     precioOriginal = precioOriginal.toFixed(2);
+
 
     if (producto.estado == "publicado") {
       return `
