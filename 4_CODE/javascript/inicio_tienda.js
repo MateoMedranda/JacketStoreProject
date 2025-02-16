@@ -144,15 +144,14 @@ function mostrarProductosUnicosConTallas() {
 }
 
 function prueba(id) {
-  let productoSelect = listaProductos.find(producto => producto.PRODUCTO_ID === id);
+  let productoSelect = listaProductos.find(producto => String(producto.PRODUCTO_ID) === String(id));
+
 
   if (productoSelect) {
-    alert("Producto encontrado:", productoSelect);
+    console.log("Producto encontrado:"+ productoSelect.PRODUCTO_DESCRIPCION);
+    localStorage.setItem("productoSelec", JSON.stringify(productoSelect));
   } else {
     console.log("Producto no encontrado");
   }
 
-  if (productoSelect) {
-    localStorage.setItem("productoSelec", JSON.stringify(productoSelect));
-  }
 }
