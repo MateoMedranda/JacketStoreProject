@@ -16,11 +16,7 @@ body{
 	background-color: #979795;
 	width: 350px;
 	border: #000000 1px solid;
-   
 	z-index: 1;
-
-
-	
 }
 
 
@@ -32,15 +28,15 @@ input.error {
 
 #imagenuno{
     z-index: 1;
-
-
-    height: 260px;
-	 border-radius: 50%;
+    height: 360px;
+	border-radius: 50%;
 }
+
 p {
     font-weight: bold;
     font-size: 18px;
 }
+
 .message-invalid
 {
 	border-radius: 5px;
@@ -49,4 +45,90 @@ p {
 	width: 80%;
 	background-color: lightcoral;
 	border: solid 1px red;
+}
+
+.contenedor {
+	background-color: rgba(255, 255, 255, 0.85); 
+	padding: 40px;
+	border-radius: 10px;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	max-width: 400px;
+	margin: auto;
+	backdrop-filter: blur(10px); 
+}
+
+.contenedor h1 {
+	font-size: 2rem;
+	font-weight: bold;
+	color: #333;
+}
+
+.contenedor p {
+	font-size: 1rem;
+	color: #555;
+}
+
+.contenedor input[type="text"],
+.contenedor input[type="password"] {
+	width: 100%;
+	padding: 12px;
+	margin-bottom: 20px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	font-size: 1rem;
+}
+
+.contenedor input[type="submit"] {
+	width: 100%;
+	padding: 12px;
+	background-color: #007bff;
+	border: none;
+	color: #fff;
+	border-radius: 8px;
+	font-size: 1rem;
+	cursor: pointer;
+}
+
+.contenedor input[type="submit"]:hover {
+	background-color: #0056b3;
+}
+
+.contenedor input[type="reset"] {
+	width: 100%;
+	padding: 12px;
+	background-color: #f0f0f0;
+	border: none;
+	color: #333;
+	border-radius: 8px;
+	font-size: 1rem;
+	cursor: pointer;
+}
+
+.contenedor input[type="reset"]:hover {
+	background-color: #ddd;
+}
+
+.row {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.col {
+	padding: 15px;
+}
+
+.footer-links {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.footer-links a {
+	color: #007bff;
+	text-decoration: none;
+}
+
+.footer-links a:hover {
+	text-decoration: underline;
 }

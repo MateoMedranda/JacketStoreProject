@@ -5,6 +5,14 @@ let listaAuxiliar = [];
 let contador;
 document.getElementById("buscar").style.display = 'none';
 
+let usuario = JSON.parse(sessionStorage.getItem("usuario"));
+
+if (usuario) {
+    console.log("Nombre: " + usuario.nombre);
+    console.log("Apellido: " + usuario.apellido);
+    document.getElementById("nombreUser").textContent = "" + usuario.nombre + " " + usuario.apellido;
+}
+
 fetch(`../../php/mostrar.php`)  
     .then(response => response.json())  
     .then(data => {
