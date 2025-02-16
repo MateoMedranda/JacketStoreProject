@@ -24,6 +24,6 @@
 		}
 	}
 else{
-	echo('Usuario o contraseña invalidos');
+	header('Location: ../../NicePage/InicioTiendaVirtual/loginerror.html');
 }
 ?>
