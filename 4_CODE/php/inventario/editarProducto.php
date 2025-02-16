@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_POST['producto_id'])) {
-    include("conexion.php");
+    include("../conexion.php");
     $producto_id = intval($_POST['producto_id']);
 
     $query = "SELECT * FROM producto WHERE PRODUCTO_ID = $producto_id";

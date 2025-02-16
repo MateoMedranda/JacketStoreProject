@@ -6,7 +6,7 @@ $color = !empty($_POST['color'])? $_POST['color']:'';
 if (isset($_POST['opciones']) && isset($_POST['cantidades'])) {
     $tallas = $_POST['opciones'];  
     $cantidades = $_POST['cantidades']; 
-    include("conexion.php");
+    include("../conexion.php");
 
     for ($i = 0; $i < count($tallas); $i++) {
 
@@ -26,5 +26,5 @@ if (isset($_POST['opciones']) && isset($_POST['cantidades'])) {
     }
 }
 
-header('Location:../NicePage/Empresa/inventario.html');
+header('Location:../../NicePage/Empresa/inventario.html');
 ?>

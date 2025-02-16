@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['buscar'])) {
-    include("conexion.php");
+    include("../conexion.php");
 
     $busqueda = trim($_POST['buscar']);
     $palabras = explode(" ", $busqueda);

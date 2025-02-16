@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['idProducto'])) {
-    include("conexion.php");
+    include("../conexion.php");
 
     $producto_id = intval($_POST['idProducto']);
     $descripcion = $_POST['descripcion'];
@@ -22,5 +22,5 @@ if (isset($_POST['idProducto'])) {
     }
 }
 
-header('Location:../NicePage/Empresa/inventario.html');
+header('Location:../../NicePage/Empresa/inventario.html');
 ?>

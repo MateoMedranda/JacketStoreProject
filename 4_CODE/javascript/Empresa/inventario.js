@@ -6,6 +6,7 @@ let contador;
 
 document.getElementById("actualizar").style.display = "none";
 document.getElementById("actualizarForm").style.display = "none";
+document.getElementById("buscar").style.display = 'none';
 
 fetch(`../../php/mostrar.php`)  
     .then(response => response.json())  
@@ -15,6 +16,7 @@ fetch(`../../php/mostrar.php`)
             console.error("Error en la respuesta del servidor:", data.error);
         } else {
             listaProductos = data;
+            listaAuxiliar = data;
             llenarTabla();
         }
     })
@@ -23,7 +25,6 @@ fetch(`../../php/mostrar.php`)
 
 contador = listaProductos.length > 0 ? listaProductos.length + 1 : 1;
 
-listaAuxiliar = listaProductos;
 
 function llenarTabla() {
     table.innerHTML = ""; 
@@ -226,9 +227,9 @@ function enviarFormulario(accion) {
     var form = document.getElementById('productoForm');
 
     if (accion === 'actualizar') {
-      form.action = '../../php/actualizar.php';
+      form.action = '../../php/inventario/actualizar.php';
     } else {
-      form.action = '../../php/registraProducto.php';
+      form.action = '../../php/inventario/registraProducto.php';
     }
 
     form.submit();
@@ -243,7 +244,7 @@ function obtenerProducto(id) {
     document.getElementById("stockD").style.display = "none";
     document.getElementById("idProducto").value = id;
     console.log("ID enviado:", id);
-    fetch("../../php/editarProducto.php", {
+    fetch("../../php/inventario/editarProducto.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: "producto_id=" + id
@@ -265,7 +266,7 @@ function obtenerProducto(id) {
 
 function buscarPorNombre(){
     let cadena = document.getElementById("buscar").value;
-    fetch("../../php/buscarNombreProducto.php", {
+    fetch("../../php/inventario/buscarNombreProducto.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: "buscar=" + cadena
@@ -281,6 +282,53 @@ function buscarPorNombre(){
         }
     })
     .catch(error => console.error("Error al obtener el producto:", error));
-}   
+}  
 
+function buscarPorDisponibilidad(cadena){
+    fetch("../../php/inventario/buscarPor.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "cadena=" + cadena
+    })
+    .then(response => response.json()) 
+    .then(data => {      
+        console.log("Datos recibidos:", data);
+        if (data.error) {
+            console.error("Error en la respuesta del servidor:", data.error);
+        } else {
+            listaProductos = data;
+            llenarTabla();
+        }
+    })
+    .catch(error => console.error("Error al obtener el producto:", error));
+}
 
+function buscarPor(){
+    let opcion = Number(document.getElementById("tipoBusqueda").value);
+    document.getElementById("buscar").style.display = 'none';
+
+    switch(opcion){
+        case 0:
+            listaProductos = listaAuxiliar;
+            llenarTabla();
+            break;
+        case 1:
+            buscarPorDisponibilidad("PRODUCTO_STOCK > 10");
+            break;
+        case 2:
+            buscarPorDisponibilidad("PRODUCTO_STOCK BETWEEN 1 AND 10");
+            break;
+        case 3:
+            buscarPorDisponibilidad("PRODUCTO_STOCK=0");
+            break;
+        case 4:
+            document.getElementById("buscar").style.display = 'inline';
+            break;
+        case 5:
+            buscarPorDisponibilidad("PRODUCTO_ESTADO='pendiente'");
+            break;
+        case 6:
+            buscarPorDisponibilidad("PRODUCTO_ESTADO='publicado'");
+            break;
+    }
+}
