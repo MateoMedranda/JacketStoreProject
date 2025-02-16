@@ -66,8 +66,9 @@ function mostrarProductosUnicosConTallas() {
       productosMap[producto.PRODUCTO_DESCRIPCION] = {
         descripcion: producto.PRODUCTO_DESCRIPCION,
         precio: producto.PRODUCTO_PRECIO,
-        descuento: producto.PRODUCTO_DESCUENTO || 0, // Asegurar que descuento no sea undefined
-        imagen: producto.PRODUCTO_IMAGEN || "imagenes/default.jpg", // Imagen por defecto si no hay imagen
+        descuento: producto.PRODUCTO_DESCUENTO || 0,
+        imagen: producto.PRODUCTO_IMAGEN || "imagenes/default.jpg",
+        estado: producto.PRODUCTO_ESTADO,
         tallas: []
       };
     }
@@ -80,12 +81,12 @@ function mostrarProductosUnicosConTallas() {
   contenedor.innerHTML = "";
 
   contenedor.innerHTML = productosUnicos.map(producto => {
-    let precioOriginal = Number(producto.precio) || 0; // Convertir a número o usar 0 si es undefined
+    let precioOriginal = Number(producto.precio) || 0;
     let precioConDescuento = (precioOriginal * (1 - Number(producto.descuento) / 100)).toFixed(2);
-    precioOriginal = precioOriginal.toFixed(2); // Aplicar toFixed después de la conversión
+    precioOriginal = precioOriginal.toFixed(2);
 
-
-    return `
+    if (producto.estado == "publicado") {
+      return `
       <div class="u-align-center u-container-align-center u-container-style u-grey-10 u-products-item u-repeater-item"
         style="padding: 10px;">
         <a onclick="prueba('one')" href="producto.html"
@@ -114,11 +115,11 @@ function mostrarProductosUnicosConTallas() {
               style="text-align: center; padding: 5px 0 0 0;">
               <div class="u-price-wrapper u-spacing-10">
                 ${producto.descuento > 0 ?
-        `<div class="u-old-price"
+          `<div class="u-old-price"
                     style="text-decoration: line-through !important; color: #888; font-size: 14px;">
                     $${precioOriginal}
                   </div>`
-        : ""}
+          : ""}
 
                 <div class="u-price" style="font-size: 1.25rem; font-weight: 600; color: #17a400;">
                   $${producto.descuento > 0 ? precioConDescuento : precioOriginal}
@@ -130,6 +131,8 @@ function mostrarProductosUnicosConTallas() {
         </a>
       </div>
     `;
+    }
+
   }).join("");
 }
 
