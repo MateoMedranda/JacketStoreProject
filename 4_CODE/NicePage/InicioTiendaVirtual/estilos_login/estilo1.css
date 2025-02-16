@@ -15,7 +15,6 @@ body{
 #contenedor{
 	background-color: #979795;
 	width: 350px;
-    height: 320px;
 	border: #000000 1px solid;
    
 	z-index: 1;
@@ -42,4 +41,12 @@ p {
     font-weight: bold;
     font-size: 18px;
 }
-
+.message-invalid
+{
+	border-radius: 5px;
+	font-weight: normal;
+	margin: auto;
+	width: 80%;
+	background-color: lightcoral;
+	border: solid 1px red;
+}
