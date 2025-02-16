@@ -1,7 +1,9 @@
 const table = document.getElementById("tablaProductos").getElementsByTagName('tbody')[0];
 const editar = document.getElementById("editar");
 let listaProductos = [];
+let listaAuxiliar = [];
 let contador;
+document.getElementById("buscar").style.display = 'none';
 
 fetch(`../../php/mostrar.php`)  
     .then(response => response.json())  
@@ -11,6 +13,7 @@ fetch(`../../php/mostrar.php`)
             console.error("Error en la respuesta del servidor:", data.error);
         } else {
             listaProductos = data;
+            listaAuxiliar = data;
             llenarTabla();
         }
     })
@@ -86,4 +89,73 @@ function cerrarEditar() {
     document.getElementById("cantidadA").value = "";
     document.getElementById("idProducto").value = 0;
     editar.close();
+}
+
+function buscarPorNombre(){
+    let cadena = document.getElementById("buscar").value;
+    fetch("../../php/inventario/buscarNombreProducto.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "buscar=" + cadena
+    })
+    .then(response => response.json()) 
+    .then(data => {      
+        console.log("Datos recibidos:", data);
+        if (data.error) {
+            console.error("Error en la respuesta del servidor:", data.error);
+        } else {
+            listaProductos = data;
+            llenarTabla();
+        }
+    })
+    .catch(error => console.error("Error al obtener el producto:", error));
+}  
+
+function buscarPorDisponibilidad(cadena){
+    fetch("../../php/inventario/buscarPor.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "cadena=" + cadena
+    })
+    .then(response => response.json()) 
+    .then(data => {      
+        console.log("Datos recibidos:", data);
+        if (data.error) {
+            console.error("Error en la respuesta del servidor:", data.error);
+        } else {
+            listaProductos = data;
+            llenarTabla();
+        }
+    })
+    .catch(error => console.error("Error al obtener el producto:", error));
+}
+
+function buscarPor(){
+    let opcion = Number(document.getElementById("tipoBusqueda").value);
+    document.getElementById("buscar").style.display = 'none';
+
+    switch(opcion){
+        case 0:
+            listaProductos = listaAuxiliar;
+            llenarTabla();
+            break;
+        case 1:
+            buscarPorDisponibilidad("PRODUCTO_STOCK > 10");
+            break;
+        case 2:
+            buscarPorDisponibilidad("PRODUCTO_STOCK BETWEEN 1 AND 10");
+            break;
+        case 3:
+            buscarPorDisponibilidad("PRODUCTO_STOCK=0");
+            break;
+        case 4:
+            document.getElementById("buscar").style.display = 'inline';
+            break;
+        case 5:
+            buscarPorDisponibilidad("PRODUCTO_ESTADO='pendiente'");
+            break;
+        case 6:
+            buscarPorDisponibilidad("PRODUCTO_ESTADO='publicado'");
+            break;
+    }
 }
