@@ -24,22 +24,41 @@ contador = listaProductos.length > 0 ? listaProductos.length + 1 : 1;
 
 function llenarTabla() {
     table.innerHTML = ""; 
+
+    const productosMap = {};
+
     listaProductos.forEach((producto) => {
+        const stockNumerico = Number(producto.PRODUCTO_STOCK);
+        if (!productosMap[producto.PRODUCTO_DESCRIPCION]) {
+            productosMap[producto.PRODUCTO_DESCRIPCION] = {
+                id: producto.PRODUCTO_ID,
+                descripcion: producto.PRODUCTO_DESCRIPCION,
+                stock: stockNumerico, 
+                precio: producto.PRODUCTO_PRECIO,
+                descuento: producto.PRODUCTO_DESCUENTO,
+                estado: producto.PRODUCTO_ESTADO
+            };
+        } else {
+            productosMap[producto.PRODUCTO_DESCRIPCION].stock += stockNumerico;
+        }
+    });
+
+    Object.values(productosMap).forEach((producto) => {
         let nuevaFila = table.insertRow();
         let disponibilidad = "";
         let estado = "";
 
-        nuevaFila.insertCell(0).innerText = producto.PRODUCTO_ID;
-        nuevaFila.insertCell(1).innerText = producto.PRODUCTO_DESCRIPCION;
-        nuevaFila.insertCell(2).innerText = producto.PRODUCTO_TALLA;
-        nuevaFila.insertCell(3).innerText = "$ " + producto.PRODUCTO_PRECIO;
-        nuevaFila.insertCell(4).innerText = producto.PRODUCTO_DESCUENTO + " %";
+        nuevaFila.insertCell(0).innerText = producto.id;
+        nuevaFila.insertCell(1).innerText = producto.descripcion;
+        nuevaFila.insertCell(2).innerText = producto.stock;
+        nuevaFila.insertCell(3).innerText = "$ " + producto.precio;
+        nuevaFila.insertCell(4).innerText = producto.descuento + " %";
         nuevaFila.insertCell(5).innerText = 'AUN NO PROGRAMADO';
-        let editar = '<button class="btn btn-warning btn-sm" onclick="obtenerProducto('+producto.PRODUCTO_ID+')">✏️</button>';
+        let editar = `<button class="btn btn-warning btn-sm" onclick="obtenerProducto(${producto.id})">✏️</button>`;
 
-        if (producto.PRODUCTO_STOCK >= 10) {
+        if (producto.stock >= 10) {
             disponibilidad = '<p class="bg-success text-white text-center m-0 p-1">Disponible</p>';
-        } else if (producto.PRODUCTO_STOCK > 0) {
+        } else if (producto.stock > 0) {
             disponibilidad = '<p class="bg-warning text-white text-center m-0 p-1">Por agotarse</p>';
         } else {
             disponibilidad = '<p class="bg-danger text-white text-center m-0 p-1">Agotado</p>';
@@ -47,7 +66,7 @@ function llenarTabla() {
 
         nuevaFila.insertCell(6).innerHTML = disponibilidad;
 
-        if (producto.PRODUCTO_ESTADO === "pendiente") {
+        if (producto.estado === "pendiente") {
             estado = '<p class="bg-warning text-white text-center m-0 p-1">Pendiente</p>';
         } else {
             estado = '<p class="bg-success text-white text-center m-0 p-1">Publicado</p>';
@@ -57,6 +76,7 @@ function llenarTabla() {
         nuevaFila.insertCell(8).innerHTML = editar;
     });
 }
+
 
 function obtenerProducto(id) {
     document.getElementById("idProducto").value = id;

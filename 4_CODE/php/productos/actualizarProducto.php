@@ -1,8 +1,8 @@
 <?php
-if (isset($_POST['idProducto'])) {
+if (isset($_POST['descripcion'])) {
     include("../conexion.php");
 
-    $producto_id = intval($_POST['idProducto']);
+    $producto_des = $_POST['descripcion'];
     $precio = $_POST['precio'];
     $descuento = $_POST['descuento'];
 
@@ -10,7 +10,7 @@ if (isset($_POST['idProducto'])) {
                 PRODUCTO_PRECIO= '$precio', 
                 PRODUCTO_DESCUENTO= '$descuento', 
                 PRODUCTO_ESTADO= 'publicado'
-              WHERE PRODUCTO_ID= '$producto_id'";
+              WHERE PRODUCTO_DESCRIPCION= '$producto_des'";
 
     if (!mysqli_query($conexion, $registro)) {
         die('❌ No se pudo agregar el registro: ' . mysqli_error($conexion));
