@@ -64,6 +64,7 @@ function mostrarProductosUnicosConTallas() {
   listaProductos.forEach(producto => {
     if (!productosMap[producto.PRODUCTO_DESCRIPCION]) {
       productosMap[producto.PRODUCTO_DESCRIPCION] = {
+        id: producto.PRODUCTO_ID,
         descripcion: producto.PRODUCTO_DESCRIPCION,
         precio: producto.PRODUCTO_PRECIO,
         descuento: producto.PRODUCTO_DESCUENTO || 0,
@@ -89,7 +90,7 @@ function mostrarProductosUnicosConTallas() {
       return `
       <div class="u-align-center u-container-align-center u-container-style u-grey-10 u-products-item u-repeater-item"
         style="padding: 10px;">
-        <a onclick="prueba('one')" href="producto.html"
+        <a onclick="prueba(${producto.id})" href="producto.html"
           style="color:black; text-decoration: none; display: block; overflow: hidden;">
           <div>
             <!-- Imagen del producto -->
@@ -136,33 +137,16 @@ function mostrarProductosUnicosConTallas() {
   }).join("");
 }
 
-// Función para manejar la selección de productos
 function prueba(id) {
-  let productoSelec = null;
+  let productoSelect = listaProductos.find(producto => producto.PRODUCTO_ID === id);
 
-  // Dependiendo del id, seleccionamos el producto adecuado
-  switch (id) {
-    case "one":
-      productoSelec = JSON.parse(localStorage.getItem("producto-one"));
-      break;
-    case "two":
-      productoSelec = JSON.parse(localStorage.getItem("producto-two"));
-      break;
-    case "three":
-      productoSelec = JSON.parse(localStorage.getItem("producto-three"));
-      break;
-    case "four":
-      productoSelec = JSON.parse(localStorage.getItem("producto-four"));
-      break;
-    case "five":
-      productoSelec = JSON.parse(localStorage.getItem("producto-five"));
-      break;
-    default:
-      console.log("Producto no encontrado");
+  if (productoSelect) {
+    alert("Producto encontrado:", productoSelect);
+  } else {
+    console.log("Producto no encontrado");
   }
 
-  // Si el producto fue encontrado, lo almacenamos en localStorage
-  if (productoSelec) {
-    localStorage.setItem("productoSelec", JSON.stringify(productoSelec));
+  if (productoSelect) {
+    localStorage.setItem("productoSelec", JSON.stringify(productoSelect));
   }
 }
