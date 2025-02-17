@@ -1,6 +1,21 @@
 let listaProductos = [];
 let listaAuxiliar = [];
-
+let listaImagenes = [];
+//Proceso fetch para recuperar las imagenes del servidor (solo la primera imagen de cada producto)
+fetch(`../../php/imgserv.php`)
+	.then(response => response.json())
+	.then(data=>
+		  {
+	console.log("Imagenes obtenidas",data);
+	if(data.error)
+		{
+			console.log("Servidor no responde",data.error);
+		}
+	else
+		{
+			listaImagenes=data;
+		}
+}).catch(error => console.error("Error en la solicitud fetch:", error));
 // Realizamos la solicitud fetch y procesamos la respuesta
 fetch(`../../php/mostrar.php`)
   .then(response => response.json())  // Convertimos la respuesta a formato JSON
@@ -20,6 +35,21 @@ fetch(`../../php/mostrar.php`)
   })
   .catch(error => console.error("Error en la solicitud fetch:", error));
 
+
+//Función para obtener las imagenes de cada producto
+function asociarImagen(producto)//Recibe el id del producto
+{
+	let direccion="";//Crea una direccion de la imagen vacia
+	listaImagenes.forEach( foto =>{//recorre la tabla de imagenes
+		console.log(foto.IMAGEN_CONTENIDO);
+		if(producto == foto.PRODUCTO_ID)//Si el id del producto esta vinculado a una imagen
+			{
+				direccion = foto.IMAGEN_CONTENIDO;//Toma la direccion de esa imagen
+				console.log(direccion);
+			}	
+	});
+	return direccion;//Devuelve la direccion
+}
 // Función para almacenar productos en el localStorage
 function almacenarProductosEnLocalStorage() {
   if (listaProductos.length >= 5) {
@@ -70,7 +100,7 @@ function mostrarProductosUnicosConTallas() {
           descripcion: producto.PRODUCTO_DESCRIPCION,
           precio: producto.PRODUCTO_PRECIO,
           descuento: producto.PRODUCTO_DESCUENTO || 0,
-          imagen: producto.PRODUCTO_IMAGEN || "imagenes/default.jpg",
+          imagen: asociarImagen(producto.PRODUCTO_ID),
           estado: producto.PRODUCTO_ESTADO,
           tallas: []
         };
