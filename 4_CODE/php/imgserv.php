@@ -1,6 +1,6 @@
 <?php
     include("conexion.php");
-    $consulta = "select MIN(IMAGEN_ID) as IMAGEN_ID, IMAGEN_CONTENIDO, PRODUCTO_ID from imagen group by PRODUCTO_ID";
+    $consulta = "select * from imagen ";
     $resultado = mysqli_query($conexion,$consulta);
 
     if($resultado){

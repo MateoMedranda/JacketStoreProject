@@ -1,36 +1,31 @@
 let produselec =JSON.parse(localStorage.getItem("productoSelec"));
-let imagenselec=localStorage.getItem("imagenSelect");
+let imagenselec=JSON.parse(localStorage.getItem("imagenSelect"));
 
 
+function cargarImagenes() {
+  let carouselInner = document.getElementById("carousel-inner");
+  carouselInner.innerHTML = ""; // Limpiar antes de agregar
 
+  imagenselec.forEach((imgSrc, index) => {
+      let isActive = index === 0 ? "active" : ""; // La primera imagen es activa
+      carouselInner.innerHTML += `
+          <div class="carousel-item ${isActive}">
+              <img src="${imgSrc}" class="d-block w-100" alt="Imagen ${index + 1}">
+          </div>
+      `;
+  });
+}
+
+cargarImagenes();
 
 //Toma de ids
-let imagenElement = document.getElementById("imagennew");
-let imagenElementtwo= document.getElementById("imagennewtwo");
+
 let costoseleccionado= document.getElementById("costoproducto");
 if(costoseleccionado){
     costoseleccionado.textContent=produselec.PRODUCTO_PRECIO;
 }
 
 
-if (imagenElement) {
-    
-    imagenElement.alt = "imagenselec";
-    imagenElement.src=imagenselec;
-
-  } else {
-    alert("No se encontró ningún elemento con el ID 'imagennew'.");
-  }
-
-
-  if (imagenElementtwo) {
-   
-    imagenElementtwo.alt = "imagenselec";
-    imagenElementtwo.src=imagenselec;
-
-  } else {
-    alert("No se encontró ningún elemento con el ID 'imagennew'.");
-  }
 if (produselec && document.getElementById("productoSelect")) { 
 
     document.getElementById("productoSelect").textContent = produselec.PRODUCTO_DESCRIPCION;

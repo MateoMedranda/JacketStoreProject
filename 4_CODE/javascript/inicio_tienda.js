@@ -1,6 +1,8 @@
 let listaProductos = [];
 let listaAuxiliar = [];
 let listaImagenes = [];
+let listaImagenesCompleto=[];
+
 //Proceso fetch para recuperar las imagenes del servidor (solo la primera imagen de cada producto)
 fetch(`../../php/imgserv.php`)
 	.then(response => response.json())
@@ -14,6 +16,8 @@ fetch(`../../php/imgserv.php`)
 	else
 		{
 			listaImagenes=data;
+      listaImagenesCompleto=data;
+      listaAuxiliar
 		}
 }).catch(error => console.error("Error en la solicitud fetch:", error));
 // Realizamos la solicitud fetch y procesamos la respuesta
@@ -50,6 +54,22 @@ function asociarImagen(producto)//Recibe el id del producto
 	});
 	return direccion;//Devuelve la direccion
 }
+
+
+function encontrarImagenes(producto) {
+  if (!Array.isArray(listaImagenes)) {
+    alert("Error: listaImagenes no está definida o no es un array.");
+    return ["ruta/default.jpg"]; // Devuelve una imagen por defecto en caso de error
+  }
+
+  let direcciones = listaImagenes
+      .filter(foto => foto.PRODUCTO_ID === producto)
+      .map(foto => foto.IMAGEN_CONTENIDO);
+
+  return direcciones.length > 0 ? direcciones : ["ruta/default.jpg"];
+}
+
+
 // Función para almacenar productos en el localStorage
 function almacenarProductosEnLocalStorage() {
   if (listaProductos.length >= 5) {
@@ -175,12 +195,25 @@ function mostrarProductosUnicosConTallas() {
 
 function prueba(id) {
   let productoSelect = listaProductos.find(producto => String(producto.PRODUCTO_ID) === String(id));
-  let imagenselect = asociarImagen(productoSelect.PRODUCTO_ID);
+  let imagenselect = encontrarImagenes(productoSelect.PRODUCTO_ID);
+
+ 
+   
+  if (imagenselect) {
+    console.log("Producto encontrado:"+ productoSelect.PRODUCTO_DESCRIPCION);
+    localStorage.setItem("imagenSelect", JSON.stringify(imagenselect));
+    
+
+  } else {
+    alert("Producto no encontrado");
+  }
+
+
 
   if (productoSelect) {
     console.log("Producto encontrado:"+ productoSelect.PRODUCTO_DESCRIPCION);
     localStorage.setItem("productoSelec", JSON.stringify(productoSelect));
-    localStorage.setItem("imagenSelect", imagenselect);
+    
 
   } else {
     console.log("Producto no encontrado");
