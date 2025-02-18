@@ -22,5 +22,5 @@ if (isset($_POST['idProducto'])) {
     }
 }
 
-header('Location:../../NicePage/Empresa/inventario.html');
+header('Location:../../NicePage/Empresa/inventario.php');
 ?>

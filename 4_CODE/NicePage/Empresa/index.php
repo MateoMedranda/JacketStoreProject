@@ -1,3 +1,14 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: ../../NicePage/InicioTiendaVirtual/login.html"); 
+    exit();
+}
+
+$nombre = $_SESSION['usuario']['nombre'];
+$apellido = $_SESSION['usuario']['apellido'];
+?>
+
 <!DOCTYPE html>
 <html style="font-size: 16px;" lang="es">
 
@@ -85,11 +96,11 @@
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="inventario.html" style="padding: 10px 20px;">Inventario</a>
+                href="inventario.php" style="padding: 10px 20px;">Inventario</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="Productos.html" style="padding: 10px 20px;">Productos</a>
+                href="Productos.php" style="padding: 10px 20px;">Productos</a>
             </li>
           </ul>
         </div>
@@ -100,9 +111,9 @@
               <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
                 <li class="u-nav-item"><a class="u-button-style u-nav-link" href="./">Inicio</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="inventario.html">Inventario</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="inventario.php">Inventario</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Productos.html">Productos</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Productos.php">Productos</a>
                 </li>
               </ul>
             </div>
@@ -111,9 +122,9 @@
         </div>
       </nav>
       <i>
-        <p id="nombreUser" class="u-text u-text-default u-text-1">Nombre Apellido</p>
+        <p id="nombreUser" class="u-text u-text-default u-text-1"><?php echo $nombre . ' ' . $apellido; ?></p>
       </i>
-      <span class="u-file-icon u-icon u-icon-2 btn"><a onclick="cerrarSesion()"><img src="images/906811.png" alt=""></a></span>
+      <span class="u-file-icon u-icon u-icon-2 btn"><a href="../../php/ingreso/logout.php"><img src="images/906811.png" alt=""></a></span>
     </div>
   </header>
   <section class="d-grid align-content-center align-items-center" id="block-2"

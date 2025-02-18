@@ -1,3 +1,14 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header("Location: ../../NicePage/InicioTiendaVirtual/login.html"); 
+    exit();
+}
+
+$nombre = $_SESSION['usuario']['nombre'];
+$apellido = $_SESSION['usuario']['apellido'];
+?>
+
 <!DOCTYPE html>
 <html style="font-size: 16px;" lang="es">
 
@@ -6,11 +17,11 @@
   <meta charset="utf-8">
   <meta name="keywords" content="Inventario">
   <meta name="description" content="">
-  <title>Productos</title>
+  <title>Inventario</title>
   <link rel="stylesheet" href="nicepage.css" media="screen">
+  <link rel="stylesheet" href="Inventario.css" media="screen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="Productos.css" media="screen">
   <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
   <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
   <meta name="generator" content="Nicepage 7.3.1, nicepage.com">
@@ -26,14 +37,14 @@
 		"logo": "images/logotipo-Photoroom-removebg-preview.png"
 }</script>
   <meta name="theme-color" content="#478ac9">
-  <meta property="og:title" content="Productos">
+  <meta property="og:title" content="Inventario">
   <meta property="og:type" content="website">
   <meta data-intl-tel-input-cdn-path="intlTelInput/">
 </head>
 
 <body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="es"
-  style="background-image: url(../../imagenes/fondoProductos.jpg);">
-  <header class="shadow u-clearfix u-grey-15 u-header u-header" id="header">
+  style="background-image: url(../../imagenes/fondoInventario.jpg);">
+  <header class="u-clearfix u-grey-15 u-header u-header shadow" id="header">
     <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-xl u-sheet-1">
       <a href="#" class="u-image u-logo u-image-1" data-image-width="519" data-image-height="481">
         <img src="images/logotipo-Photoroom-removebg-preview.png" class="u-logo-image u-logo-image-1">
@@ -85,11 +96,11 @@
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="inventario.html" style="padding: 10px 20px;">Inventario</a>
+                href="inventario.php" style="padding: 10px 20px;">Inventario</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="Productos.html" style="padding: 10px 20px;">Productos</a>
+                href="Productos.php" style="padding: 10px 20px;">Productos</a>
             </li>
           </ul>
         </div>
@@ -100,9 +111,9 @@
               <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
                 <li class="u-nav-item"><a class="u-button-style u-nav-link" href="./">Inicio</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="inventario.html">Inventario</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="inventario.php">Inventario</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Productos.html">Productos</a>
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Productos.php">Productos</a>
                 </li>
               </ul>
             </div>
@@ -110,14 +121,15 @@
           <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
         </div>
       </nav>
-      <i><p id="nombreUser" class="u-text u-text-default u-text-1">Nombre Apellido</p></i>
-      <span class="u-file-icon u-icon u-icon-2"><img src="images/906811.png" alt=""></span>
+      <i><p id="nombreUser" class="u-text u-text-default u-text-1"><?php echo $nombre . ' ' . $apellido; ?></p></i>
+      <span class="u-file-icon u-icon u-icon-2 btn"><a href="../../php/ingreso/logout.php"><img src="images/906811.png" alt=""></a></span>
     </div>
   </header>
   <section class="u-clearfix u-section-1" id="block-2">
     <div class="u-clearfix u-sheet u-sheet-1">
-      <h2 class="u-text u-text-default u-text-1"><b>Lista de productos</b></h2>
-      <div class="u-container-style u-expanded-width u-group u-palette-2-light-3 u-group-1 shadow">
+      <h2 class="u-text u-text-default u-text-1"><b>Inventario</b></h2>
+
+      <div class="u-container-style u-expanded-width u-group u-palette-1-light-3 u-group-1 shadow">
         <div class="m-3 col-6 align-content-center justify-content-center">
           <div class="d-flex align-items-center">
             <label class="form-label fw-bold col-2">Buscar productos:</label>
@@ -133,32 +145,38 @@
             <input type="text" id="buscar" class="form-control w-50 shadow" style="margin-left: 4%;" onkeypress="buscarPorNombre()" placeholder="Ej: Chompa Jean">
           </div>
         </div>
+        <div class="u-container-layout u-container-layout-1">
+          <a onclick="abrirAgregar()"
+            class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius u-btn-1">Agregar
+            Producto </a>
+        </div>
       </div>
       <div class="u-container-style u-expanded-width u-group u-white u-group-2 shadow">
         <div class="u-container-layout u-container-layout-2">
           <div class="u-expanded-width u-table u-table-responsive u-table-1">
-            <table class="u-table-entity" id="tablaProductos">
+            <table id="tablaInventario" class="u-table-entity">
               <colgroup>
-                <col width="5.8%">
+                <col width="5.2%">
                 <col width="18.1%">
                 <col width="10.3%">
-                <col width="7.7%">
-                <col width="7.7%">
-                <col width="15.1%">
                 <col width="10.7%">
-                <col width="6.9%">
-                <col width="17.7%">
+                <col width="11.2%">
+                <col width="8.1%">
+                <col width="9.7%">
+                <col width="5.9%">
+                <col width="20.7%">
               </colgroup>
               <thead class="u-align-center u-table-header u-white u-table-header-1">
                 <tr style="height: 21px;">
                   <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Id</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Descripción</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Stock</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Precio</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Descuento</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Categoría</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Disponibilidad
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Descripción
                   </th>
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Materiales
+                  </th>
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Tallas</th>
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Colores</th>
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">En stock</th>
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Disponibilidad</th>
                   <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Estado</th>
                   <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell"></th>
                 </tr>
@@ -173,61 +191,117 @@
     </div>
   </section>
 
-  <dialog id="editar" class="w-50 mt-5 p-4 border rounded shadow">
+  <dialog id="agregar" class="w-50 mt-5 p-4 border rounded shadow">
     <h3 class="text-center bg-dark bg-gradient text-white">Producto</h3>
 
-    <form id="productoForm" method="post" action="../../php/productos/actualizarProducto.php">
+    <form id="productoForm" method="post" enctype="multipart/form-data">
       <div class="row">
-        <input type="number" id="idProducto" name="idProducto" style="display: none;">
+        <input type="number" id="idProducto"  name="idProducto" style="display: none;">
 
         <div class="col-md-7">
           <div class="mb-3">
             <label class="form-label fw-bold">Descripción del producto:</label>
             <textarea id="descripcion" name="descripcion" class="form-control shadow" rows="3"
-              placeholder="Ej: descripción breve, nombre del producto" required readonly></textarea>
+              placeholder="Ej: descripción breve, nombre del producto" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Materiales:</label>
+            <textarea id="materiales" name="material" class="form-control shadow" rows="3" placeholder="Ej: 100% nylon, 100% algodón"
+              required></textarea>
           </div>
         </div>
 
         <div class="col-md-4 mt-3">
+          
           <div class="d-flex flex-wrap shadow p-3">
+            <div id="tallasFormA" class="tallas col-3">
+              <label class="form-label fw-bold">Tallas:</label>
+              <div class="form-check mb-2">
+                <input class="form-check-input border-black" type="checkbox" id="talla-xs" name="opciones[]" onchange="habilitarNum(0)" value="XS">
+                <label class="form-check-label" for="talla-xs">XS</label>
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input border-black" type="checkbox" id="talla-s" name="opciones[]" onchange="habilitarNum(1)" value="S">
+                <label class="form-check-label" for="talla-s">S</label>
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input border-black" type="checkbox" id="talla-m" name="opciones[]" onchange="habilitarNum(2)" value="M">
+                <label class="form-check-label" for="talla-m">M</label>
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input border-black" type="checkbox" id="talla-l" name="opciones[]" onchange="habilitarNum(3)" value="L">
+                <label class="form-check-label" for="talla-l">L</label>
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input border-black" type="checkbox" id="talla-xl" name="opciones[]" onchange="habilitarNum(4)" value="XL">
+                <label class="form-check-label" for="talla-xl">XL</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input border-black" type="checkbox" id="talla-xxl" name="opciones[]" onchange="habilitarNum(5)" value="XXL">
+                <label class="form-check-label" for="talla-xxl">XXL</label>
+              </div>
+            </div>
+            <div id="tallasFormB" class="cantidades col-5 ms-5">
+              <label class="form-label fw-bold">Cantidad:</label>
+              <input id="cantidad0" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
+              <input id="cantidad1" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
+              <input id="cantidad2" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
+              <input id="cantidad3" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
+              <input id="cantidad4" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
+              <input id="cantidad5" type="number" class="w-100" onchange="calcularStock()" name="cantidades[]" placeholder="Ej: 23" disabled>
+            </div>
+
             <div id="actualizarForm" class="col-9">
               <label class="form-label" for="tallaA">Talla</label>
               <input id="tallaA" name="tallaA" type="text" class="form-control border-black" readonly>
               <br>
               <label class="form-label" for="cantidadA">Cantidad</label>
-              <input id="cantidadA" name="cantidadA" type="number" class="w-50" placeholder="Ej: 23">
+              <input id="cantidadA" name="cantidadA" type="number" class="w-50" onchange="calcularStock()" placeholder="Ej: 23">
             </div>
+
           </div>
         </div>
 
       </div>
 
       <div class="row mt-4">
-        <div class="col-3">
-          <label class="form-label fw-bold">Precio ($):</label>
-          <div class="d-flex">
-            <input id="precio" step="0.01" min="0" name="precio" type="number" class="w-75" placeholder="Ej: 23.35">
-          </div>
+        <label class="form-label fw-bold">Colores:</label>
+        <div class="d-flex flex-column">
+          <textarea id="colores" name="color" class="form-control shadow" rows="1" placeholder="Ej: Negro" required></textarea>
         </div>
-        <div class="col-3">
-          <label class="form-label fw-bold">Descuento (%):</label>
-          <div class="d-flex">
-            <input id="descuento" name="descuento" type="number" class="w-75" placeholder="Ej: 20" >
-          </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <label class="form-label fw-bold">Imágenes del Producto (máx. 10):</label>
+          <input type="file" class="form-control" id="imageUpload" name="imagen[]" multiple accept="image/*" required>
+          <div id="imagePreview" class="mt-3 d-flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+
+      <div id="stockD" class="row mt-3">
+        <div class="col-md-3">
+          <label class="form-label fw-bold">En Stock:</label>
+          <input id="stock" type="number" class="form-control shadow" readonly disabled>
         </div>
       </div>
 
       <div class="text-center mt-4">
-        <button type="submit" class="btn btn-warning" id="actualizar">Publicar</button>
-        <button type="reset" class="btn btn-danger" onclick="cerrarEditar()">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="registrar" onclick="enviarFormulario('registrar')">Registrar</button>
+        <button type="button" class="btn btn-warning" id="actualizar" onclick="enviarFormulario('actualizar')">Actualizar</button>
+        <button type="reset" class="btn btn-danger" onclick="cerrarAgregar()">Cancelar</button>
       </div>
     </form>
-  </dialog>
 
+  </dialog>
+  <br>
+
+
+
+  <script src="../../javascript/Empresa/inventario.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-  <script src="../../javascript/Empresa/inventario2.js"></script>
 
 </body>
 

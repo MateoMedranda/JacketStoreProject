@@ -17,5 +17,5 @@ if (isset($_POST['descripcion'])) {
     }
 }
 
-header('Location:../../NicePage/Empresa/Productos.html');
+header('Location:../../NicePage/Empresa/Productos.php');
 ?>

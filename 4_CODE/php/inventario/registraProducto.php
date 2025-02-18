@@ -70,5 +70,5 @@ if (isset($_POST['opciones']) && isset($_POST['cantidades'])) {
     }
 }
 
-header('Location:../../NicePage/Empresa/inventario.html');
+header('Location:../../NicePage/Empresa/inventario.php');
 ?>

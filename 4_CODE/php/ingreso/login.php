@@ -1,35 +1,37 @@
 <?php
+session_start(); 
 include('../conexion.php');
 
 $usuario = $_POST['user'];
 $clave = $_POST['pasword'];
 
-$consulta = "SELECT * FROM usuario WHERE USUARIO_CORREO='$usuario' AND USUARIO_CLAVE='$clave'";
-$resultado = mysqli_query($conexion, $consulta);
-$fila = mysqli_fetch_assoc($resultado);
+$consulta = $conexion->prepare("SELECT * FROM usuario WHERE USUARIO_CORREO=? AND USUARIO_CLAVE=?");
+$consulta->bind_param("ss", $usuario, $clave);
+$consulta->execute();
+$resultado = $consulta->get_result();
+$fila = $resultado->fetch_assoc();
 
 if ($fila) {
-    $nombre = $fila['USUARIO_NOMBRE'];
-    $apellido = $fila['USUARIO_APELLIDO'];
-    $rol = (int)$fila['ROL_ID'];
+    $_SESSION['usuario'] = [
+        'nombre' => $fila['USUARIO_NOMBRE'],
+        'apellido' => $fila['USUARIO_APELLIDO'],
+        'rol' => (int)$fila['ROL_ID']
+    ];
 
-    echo "<script>
-        let usuario = { nombre: '$nombre', apellido: '$apellido' };
-        sessionStorage.setItem('usuario', JSON.stringify(usuario));
-    </script>";
-
-    switch ($rol) {
+    switch ($_SESSION['usuario']['rol']) {
         case 1:
-            echo "<script>window.location.href='../../NicePage/Empresa/index.html';</script>";
+            header("Location: ../../NicePage/Empresa/index.php");
             break;
         case 2:
-            echo "<script>window.location.href='../../NicePage/Empresa/Inventario.html';</script>";
+            header("Location: ../../NicePage/Empresa/Inventario.php");
             break;
         case 3:
-            echo "<script>window.location.href='../../NicePage/InicioTiendaVirtual/index.html';</script>";
+            header("Location: ../../NicePage/InicioTiendaVirtual/index.php");
             break;
     }
+    exit();
 } else {
-    echo "<script>window.location.href='../../NicePage/InicioTiendaVirtual/loginerror.html';</script>";
+    header("Location: ../../NicePage/InicioTiendaVirtual/loginerror.html");
+    exit();
 }
 ?>
