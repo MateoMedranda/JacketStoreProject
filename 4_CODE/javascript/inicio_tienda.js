@@ -4,40 +4,32 @@ let listaImagenes = [];
 let listaImagenesCompleto=[];
 
 //Proceso fetch para recuperar las imagenes del servidor (solo la primera imagen de cada producto)
-fetch(`../../php/imgserv.php`)
-	.then(response => response.json())
-	.then(data=>
-		  {
-	console.log("Imagenes obtenidas",data);
-	if(data.error)
-		{
-			console.log("Servidor no responde",data.error);
-		}
-	else
-		{
-			listaImagenes=data;
-      listaImagenesCompleto=data;
-      listaAuxiliar
-		}
-}).catch(error => console.error("Error en la solicitud fetch:", error));
-// Realizamos la solicitud fetch y procesamos la respuesta
-fetch(`../../php/mostrar.php`)
-  .then(response => response.json())  // Convertimos la respuesta a formato JSON
-  .then(data => {
-    console.log("Datos recibidos:", data);
-
-    if (data.error) {
-      console.error("Error en la respuesta del servidor:", data.error);
+Promise.all([
+  fetch(`../../php/imgserv.php`).then(response => response.json()), // Recuperar imágenes
+  fetch(`../../php/mostrar.php`).then(response => response.json())  // Recuperar productos
+])
+  .then(([dataImagenes, dataProductos]) => {
+    // Procesar imágenes
+    if (dataImagenes.error) {
+      console.log("Error al obtener imágenes:", dataImagenes.error);
     } else {
-      listaProductos = data;  // Guardamos los productos en la lista
-      listaAuxiliar = data;
+      listaImagenes = dataImagenes;
+      listaImagenesCompleto = dataImagenes;
+    }
 
-      mostrarProductosUnicosConTallas();
-      almacenarProductosEnLocalStorage();
-      actualizarElementosHTML();
+    // Procesar productos
+    if (dataProductos.error) {
+      console.error("Error al obtener productos:", dataProductos.error);
+    } else {
+      listaProductos = dataProductos;
+      mostrarProductosUnicosConTallas(); // Mostrar productos en el HTML
+      almacenarProductosEnLocalStorage(); // Guardar productos en localStorage
+      actualizarElementosHTML(); // Actualizar elementos HTML si es necesario
     }
   })
-  .catch(error => console.error("Error en la solicitud fetch:", error));
+  .catch(error => {
+    console.error("Error en una de las solicitudes:", error);
+  });
 
 
 //Función para obtener las imagenes de cada producto

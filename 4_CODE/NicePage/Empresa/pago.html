@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forma de Pago - Compra</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .payment-method-details {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="my-4">Selecciona tu Forma de Pago</h1>
+
+        <!-- Formulario para elegir forma de pago -->
+        <form action="procesar_pago.php" method="POST">
+            <div class="mb-3">
+                <label for="payment-method" class="form-label">Método de Pago</label>
+                <select id="payment-method" name="payment_method" class="form-select" >
+                    <option value="">Selecciona un método de pago</option>
+                    <option value="credit_card">Tarjeta de Crédito/Débito</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="gift_card">Tarjeta de Regalo</option>
+                </select>
+            </div>
+
+            <!-- Detalles para tarjeta de crédito -->
+            <div id="credit-card-details" class="payment-method-details">
+                <h3>Detalles de la Tarjeta de Crédito</h3>
+                <div class="mb-3">
+                    <label for="card-number" class="form-label">Número de Tarjeta</label>
+                    <input type="text" id="card-number" name="card_number" class="form-control" placeholder="Ej: 1234 5678 9876 5432" >
+                </div>
+                <div class="mb-3">
+                    <label for="card-expiry" class="form-label">Fecha de Expiración</label>
+                    <input type="month" id="card-expiry" name="card_expiry" class="form-control" >
+                </div>
+                <div class="mb-3">
+                    <label for="card-cvc" class="form-label">CVC</label>
+                    <input type="text" id="card-cvc" name="card_cvc" class="form-control" placeholder="Ej: 123" >
+                </div>
+            </div>
+
+            <!-- Detalles para PayPal -->
+            <div id="paypal-details" class="payment-method-details">
+                <h3>Detalles de PayPal</h3>
+                <div class="mb-3">
+                    <label for="paypal-email" class="form-label">Correo electrónico de PayPal</label>
+                    <input type="email" id="paypal-email" name="paypal_email" class="form-control" placeholder="Ej: tu-email@dominio.com" >
+                </div>
+            </div>
+
+            <!-- Detalles para tarjeta de regalo -->
+            <div id="gift-card-details" class="payment-method-details">
+                <h3>Detalles de la Tarjeta de Regalo</h3>
+                <div class="mb-3">
+                    <label for="gift-card-code" class="form-label">Código de la Tarjeta de Regalo</label>
+                    <input type="text" id="gift-card-code" name="gift_card_code" class="form-control" placeholder="Ej: XXXXXX-XXXXXX" >
+                </div>
+                <!-- Campo para ingresar el valor de la tarjeta de regalo -->
+                <div class="mb-3">
+                    <label for="gift-card-amount" class="form-label">Valor de la Tarjeta de Regalo</label>
+                    <input type="number" id="gift-card-amount" name="gift_card_amount" class="form-control" placeholder="Ej: 50" >
+                    <small class="form-text text-muted">Ingresa el valor de la tarjeta de regalo.</small>
+                </div>
+            </div>
+
+            <!-- Campo para el total de la compra -->
+            <div class="mb-3">
+                <label for="purchase-total" class="form-label">Total de la Compra</label>
+                <input type="number" id="purchase-total" name="purchase_total" class="form-control" value="100" readonly>
+                <small class="form-text text-muted">Este es el total de tu compra.</small>
+            </div>
+
+            <input type="submit" value="Enviar" class="btn btn-primary mt-4">
+        </form>
+    </div>
+
+    <!-- Script para mostrar los detalles según la forma de pago seleccionada -->
+    <script>
+        document.getElementById('payment-method').addEventListener('change', function () {
+            var selectedMethod = this.value;
+            // Ocultar todos los detalles de pago
+            document.getElementById('credit-card-details').style.display = 'none';
+            document.getElementById('paypal-details').style.display = 'none';
+            document.getElementById('gift-card-details').style.display = 'none';
+
+            // Mostrar el formulario correspondiente según la opción seleccionada
+            if (selectedMethod === 'credit_card') {
+                document.getElementById('credit-card-details').style.display = 'block';
+            } else if (selectedMethod === 'paypal') {
+                document.getElementById('paypal-details').style.display = 'block';
+            } else if (selectedMethod === 'gift_card') {
+                document.getElementById('gift-card-details').style.display = 'block';
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
