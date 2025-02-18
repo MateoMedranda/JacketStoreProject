@@ -175,13 +175,16 @@ function mostrarProductosUnicosConTallas() {
 
 function prueba(id) {
   let productoSelect = listaProductos.find(producto => String(producto.PRODUCTO_ID) === String(id));
-
+  let imagenselect = asociarImagen(productoSelect.PRODUCTO_ID);
 
   if (productoSelect) {
     console.log("Producto encontrado:"+ productoSelect.PRODUCTO_DESCRIPCION);
     localStorage.setItem("productoSelec", JSON.stringify(productoSelect));
+    localStorage.setItem("imagenSelect", imagenselect);
+
   } else {
     console.log("Producto no encontrado");
   }
+  
 
 }
