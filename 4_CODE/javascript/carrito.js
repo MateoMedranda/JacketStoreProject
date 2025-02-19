@@ -1,11 +1,15 @@
 const table = document.getElementById("tablaProductos").getElementsByTagName('tbody')[0];
 let listaProductos =JSON.parse(localStorage.getItem("carrito"));
 let valortotal=0;
+let descuento=0;
+let precioOriginal=0;
 
 //preciototal
 
 listaProductos.forEach((producto) => {
-    valortotal=valortotal+ parseFloat(producto.PRODUCTO_PRECIO);
+    precioOriginal=parseFloat(producto.PRODUCTO_PRECIO);
+    descuento=parseFloat(producto.PRODUCTO_DESCUENTO)/100;
+    valortotal=valortotal+ (precioOriginal-(precioOriginal*descuento));
 
 });
 

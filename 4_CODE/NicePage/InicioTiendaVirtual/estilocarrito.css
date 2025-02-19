@@ -1,0 +1,12 @@
+table{
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%; /* Opcional: ajusta el ancho de la tabla */
+    height: 90%;
+    border: none;
+}
+.tablearriba {
+    
+    padding: 8px;
+    vertical-align: top; /* Alinea el contenido hacia arriba */
+}

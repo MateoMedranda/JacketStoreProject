@@ -11,7 +11,7 @@ Promise.all([
   .then(([dataImagenes, dataProductos]) => {
     // Procesar imágenes
     if (dataImagenes.error) {
-      console.log("Error al obtener imágenes:", dataImagenes.error);
+      alert("Error al obtener imágenes:", dataImagenes.error);
     } else {
       listaImagenes = dataImagenes;
       listaImagenesCompleto = dataImagenes;
