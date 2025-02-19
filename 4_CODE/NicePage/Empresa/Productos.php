@@ -192,21 +192,27 @@ $apellido = $_SESSION['usuario']['apellido'];
         <input type="number" id="idProducto" name="idProducto" style="display: none;">
 
         <div class="col-md-7">
-          <div class="mb-3">
+          <div class="mb-3 row">
             <label class="form-label fw-bold">Descripción del producto:</label>
             <textarea id="descripcion" name="descripcion" class="form-control shadow" rows="3"
               placeholder="Ej: descripción breve, nombre del producto" required readonly></textarea>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label fw-bold">Categoría del producto:</label>
+            <select id="categorias" name="categorias" class="form-control form-select shadow border-info">
+            
+            </select>
           </div>
         </div>
 
         <div class="col-md-4 mt-3">
           <div class="d-flex flex-wrap shadow p-3">
             <div id="actualizarForm" class="col-9">
-              <label class="form-label" for="tallaA">Talla</label>
+              <label class="form-label" for="tallaA">Tallas</label>
               <input id="tallaA" name="tallaA" type="text" class="form-control border-black" readonly>
               <br>
-              <label class="form-label" for="cantidadA">Cantidad</label>
-              <input id="cantidadA" name="cantidadA" type="number" class="w-50" placeholder="Ej: 23">
+              <label class="form-label" for="cantidadA">Cantidad Total</label>
+              <input id="cantidadA" name="cantidadA" type="number" class="w-50" placeholder="Ej: 23" readonly>
             </div>
           </div>
         </div>
@@ -217,13 +223,13 @@ $apellido = $_SESSION['usuario']['apellido'];
         <div class="col-3">
           <label class="form-label fw-bold">Precio ($):</label>
           <div class="d-flex">
-            <input id="precio" step="0.01" min="0" name="precio" type="number" class="w-75" placeholder="Ej: 23.35">
+            <input id="precio" step="0.01" min="0" name="precio" type="number" class="w-75 shadow border-info" placeholder="Ej: 23.35">
           </div>
         </div>
         <div class="col-3">
           <label class="form-label fw-bold">Descuento (%):</label>
           <div class="d-flex">
-            <input id="descuento" name="descuento" type="number" class="w-75" placeholder="Ej: 20" >
+            <input id="descuento" name="descuento" type="number" class="w-75 shadow border-info" placeholder="Ej: 20" >
           </div>
         </div>
       </div>

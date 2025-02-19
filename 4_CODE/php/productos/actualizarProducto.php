@@ -5,11 +5,13 @@ if (isset($_POST['descripcion'])) {
     $producto_des = $_POST['descripcion'];
     $precio = $_POST['precio'];
     $descuento = $_POST['descuento'];
+    $categoria = $_POST['categorias'];
 
     $registro = "UPDATE producto SET 
                 PRODUCTO_PRECIO= '$precio', 
                 PRODUCTO_DESCUENTO= '$descuento', 
-                PRODUCTO_ESTADO= 'publicado'
+                PRODUCTO_ESTADO= 'publicado',
+                ID_CATEGORIA = '$categoria'
               WHERE PRODUCTO_DESCRIPCION= '$producto_des'";
 
     if (!mysqli_query($conexion, $registro)) {

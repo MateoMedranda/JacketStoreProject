@@ -2,6 +2,7 @@ const table = document.getElementById("tablaProductos").getElementsByTagName('tb
 const editar = document.getElementById("editar");
 let listaProductos = [];
 let listaAuxiliar = [];
+let listaCategorias = [];
 let contador;
 document.getElementById("buscar").style.display = 'none';
 
@@ -22,7 +23,7 @@ fetch(`../../php/mostrar.php`)
         } else {
             listaProductos = data;
             listaAuxiliar = data;
-            llenarTabla();
+            cargarCategorias().then(() => llenarTabla());
         }
     })
     .catch(error => console.error("Error en la solicitud fetch:", error));
@@ -44,7 +45,8 @@ function llenarTabla() {
                 stock: stockNumerico, 
                 precio: producto.PRODUCTO_PRECIO,
                 descuento: producto.PRODUCTO_DESCUENTO,
-                estado: producto.PRODUCTO_ESTADO
+                estado: producto.PRODUCTO_ESTADO,
+                categoria: producto.ID_CATEGORIA
             };
         } else {
             productosMap[producto.PRODUCTO_DESCRIPCION].stock += stockNumerico;
@@ -61,7 +63,8 @@ function llenarTabla() {
         nuevaFila.insertCell(2).innerText = producto.stock;
         nuevaFila.insertCell(3).innerText = "$ " + producto.precio;
         nuevaFila.insertCell(4).innerText = producto.descuento + " %";
-        nuevaFila.insertCell(5).innerText = 'AUN NO PROGRAMADO';
+        console.log(listaCategorias);
+        nuevaFila.insertCell(5).innerText = listaCategorias.find(categoria => categoria.CATEGORIA_ID === producto.categoria)?.CATEGORIA_NOMBRE || "Categoría no encontrada";
         let editar = `<button class="btn btn-warning btn-sm" onclick="obtenerProducto(${producto.id})">✏️</button>`;
 
         if (producto.stock >= 10) {
@@ -84,6 +87,29 @@ function llenarTabla() {
         nuevaFila.insertCell(8).innerHTML = editar;
     });
 }
+
+function cargarCategorias() {
+    return fetch(`../../php/productos/mostrarCategorias.php`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Datos recibidos:", data);
+            if (data.error) {
+                console.error("Error en la respuesta del servidor:", data.error);
+                throw new Error(data.error); // Importante para manejar errores en la promesa
+            }
+            listaCategorias = data;
+
+            let opciones = "";
+            data.forEach(categoria => {
+                opciones += `<option value="${categoria.CATEGORIA_ID}">${categoria.CATEGORIA_NOMBRE}</option>`;
+            });
+
+            document.getElementById("categorias").innerHTML = opciones;
+        })
+        .catch(error => console.error("Error en la solicitud fetch:", error));
+}
+
+
 
 
 function obtenerProducto(id) {
