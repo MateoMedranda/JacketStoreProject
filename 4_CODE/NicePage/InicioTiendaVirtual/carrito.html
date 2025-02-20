@@ -167,8 +167,40 @@
                       </table>
               </div>
                     </div>
-                    <a href="#" class="u-btn u-btn-round u-button-style u-cart-checkout-btn u-radius-50 u-btn-4">Proceed to Checkout</a>
+                    <br>
+                    <p >
 
+                    <a href="#popup-abd2" class="u-align-center mt-3 u-border-active-none u-border-hover-none u-btn u-btn-rectangle u-button-style u-none u-product-control u-text-active-palette-2-base u-text-hover-palette-2-base u-text-palette-1-base u-btn-2 u-dialog-link u-payment-button" 
+>
+¡Comprar ahora!
+                  </a>
+                </p>
+              
+                  <!-- Popup de pago -->
+              <div id="popup-abd2" class="popup-container">
+                      <div class="popup-content">
+                          <h3>Confirmación de Pago</h3>
+                          <p>Total a pagar: </p>
+                          <p id="preciopay"></p>
+                          <button id="paypal-button">Pagar con PayPal</button>
+                          <button id="paypal-button">Pagar en tienda</button>
+                          <br>
+                          <button class="close-btn" onclick="closePopup()">Cerrar</button>
+                      </div>
+                  </div>
+              
+                  <script>
+                      // Función para cerrar el popup
+                      function closePopup() {
+                          document.getElementById('popup-abd2').style.display = 'none';
+                      }
+              
+                      // Mostrar el popup cuando se haga clic en el enlace de compra
+                      document.querySelector('.u-dialog-link').addEventListener('click', function(event) {
+                          event.preventDefault(); // Prevenir el enlace predeterminado
+                          document.getElementById('popup-abd2').style.display = 'block'; // Mostrar el popup
+                      });
+                  </script>
                   </div>
                 
               </div>
@@ -197,8 +229,7 @@
     </table>
 
   </div>
- 
-   
+  
 
     </section>
     

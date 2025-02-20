@@ -16,9 +16,11 @@ listaProductos.forEach((producto) => {
 
 let pretotal= document.getElementById("preciototal");
 
+
 if (pretotal) {
     
     pretotal.textContent = valortotal;
+    document.getElementById("preciopay").textContent=valortotal + "$";
     
 
   } else {
@@ -47,3 +49,15 @@ else{
     alert("No funca");
 }
 
+
+        // Función para cerrar el popup
+        function closePopup() {
+            document.getElementById('popup-abd2').style.display = 'none';
+        }
+
+        // Mostrar el popup cuando se haga clic en el enlace de compra
+        document.querySelector('.u-dialog-link').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevenir el enlace predeterminado
+            document.getElementById('popup-abd2').style.display = 'block'; // Mostrar el popup
+        });
+   
