@@ -35,7 +35,7 @@ if(table){
     table.innerHTML = ""; 
     listaProductos.forEach((producto) => {
         let nuevaFila = table.insertRow();
-        let editar = '<button class="btn btn-warning btn-sm" onclick="obtenerProducto('+ producto.PRODUCTO_ID+')">✏️</button><button class="ms-3 btn btn-danger btn-sm" onclick="borrarFila(this)">🗑️</button>';
+        let editar = '<button class="btn btn-warning btn-sm" onclick="obtenerProducto('+ producto.PRODUCTO_ID+')"></button><button class="ms-3 btn btn-danger btn-sm" onclick="borrarFila(this)">🗑️</button>';
         
 
         let celdaID = nuevaFila.insertCell(0);
