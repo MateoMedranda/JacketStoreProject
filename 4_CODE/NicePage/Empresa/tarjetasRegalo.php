@@ -7,25 +7,8 @@ if (!isset($_SESSION['usuario'])) {
 
 $nombre = $_SESSION['usuario']['nombre'];
 $apellido = $_SESSION['usuario']['apellido'];
-$rol = $_SESSION['usuario']['rol'];
 ?>
 
-<script>
-  // Pasar el valor de PHP a JS de forma segura
-  let rolUsuario = <?php echo json_encode($rol); ?>;
-
-  // Ejecutar el código cuando el DOM esté listo
-  document.addEventListener("DOMContentLoaded", function() {
-    let usuarioElemento = document.getElementById("usuario");
-    if (usuarioElemento) {
-      if (rolUsuario == 1) {
-        usuarioElemento.style.display = "inline";
-      } else {
-        usuarioElemento.style.display = "none";
-      }
-    }
-  });
-</script>
 <!DOCTYPE html>
 <html style="font-size: 16px;" lang="es">
 
@@ -34,7 +17,7 @@ $rol = $_SESSION['usuario']['rol'];
   <meta charset="utf-8">
   <meta name="keywords" content="Inventario">
   <meta name="description" content="">
-  <title>Productos</title>
+  <title>Tarjetas De Regalo</title>
   <link rel="stylesheet" href="nicepage.css" media="screen">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -105,23 +88,23 @@ $rol = $_SESSION['usuario']['rol'];
             </svg>
           </a>
         </div>
-        <div class="u-custom-menu u-nav-container d-flex">
-          <ul class="u-nav u-unstyled u-nav-1" style="display:flex;">
+        <div class="u-custom-menu u-nav-container">
+          <ul class="u-nav u-unstyled u-nav-1">
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="./"
                 style="padding: 10px 20px;">Inicio</a>
             </li>
-            <li class="u-nav-item "><a
+            <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
                 href="inventario.php" style="padding: 10px 20px;">Inventario</a>
             </li>
-            <li class="u-nav-item "><a
+            <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
                 href="Productos.php" style="padding: 10px 20px;">Productos</a>
             </li>
-            <li id="usuario" class="u-nav-item"><a
+            <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="usuarios.php" style="padding: 10px 20px;">Usuarios</a>
+                href="tarjetasRegalo.php" style="padding: 10px 20px;">Tarjetas De Regalo</a>
             </li>
           </ul>
         </div>
@@ -148,22 +131,25 @@ $rol = $_SESSION['usuario']['rol'];
   </header>
   <section class="u-clearfix u-section-1" id="block-2">
     <div class="u-clearfix u-sheet u-sheet-1">
-      <h2 class="u-text u-text-default u-text-1"><b>Lista de productos</b></h2>
+      <h2 class="u-text u-text-default u-text-1"><b>Lista de Tarjetas de Regalo</b></h2>
       <div class="u-container-style u-expanded-width u-group u-palette-2-light-3 u-group-1 shadow">
         <div class="m-3 col-6 align-content-center justify-content-center">
           <div class="d-flex align-items-center">
-            <label class="form-label fw-bold col-2">Buscar productos:</label>
+            <label class="form-label fw-bold col-2">Buscar Tarjetas:</label>
             <select id="tipoBusqueda" class="form-select shadow w-50" onchange="buscarPor()">
               <option value="0">Selecciona una opción</option>
-              <option value="1">Disponibles</option>
-              <option value="2">Por agotarse</option>
-              <option value="3">Agotados</option>
-              <option value="4">Por nombre</option>
-              <option value="5">Pendientes</option>
-              <option value="6">Publicados</option>
+              <option value="1">Vencidas</option>
+              <option value="2">Canjeada</option>
+              <option value="3">Sin canjear</option>
+              <option value="4">Anuladas</option>
             </select>
             <input type="text" id="buscar" class="form-control w-50 shadow" style="margin-left: 4%;" onkeypress="buscarPorNombre()" placeholder="Ej: Chompa Jean">
           </div>
+        </div>
+        <div class="u-container-layout u-container-layout-1">
+          <a onclick="abrirAgregar()"
+            class="u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius u-btn-1">Agregar
+            Producto </a>
         </div>
       </div>
       <div class="u-container-style u-expanded-width u-group u-white u-group-2 shadow">
@@ -172,25 +158,18 @@ $rol = $_SESSION['usuario']['rol'];
             <table class="u-table-entity" id="tablaProductos">
               <colgroup>
                 <col width="5.8%">
-                <col width="18.1%">
-                <col width="10.3%">
-                <col width="7.7%">
-                <col width="7.7%">
-                <col width="15.1%">
-                <col width="10.7%">
-                <col width="6.9%">
+                <col width="28.1%">
+                <col width="17.3%">
+                <col width="14.2%">
                 <col width="17.7%">
+                <col width="15.1%">
               </colgroup>
               <thead class="u-align-center u-table-header u-white u-table-header-1">
                 <tr style="height: 21px;">
                   <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Id</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Descripción</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Stock</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Precio</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Descuento</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Categoría</th>
-                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Disponibilidad
-                  </th>
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Número</th>
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Nombre Usuario</th>
+                  <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Monto</th>
                   <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell">Estado</th>
                   <th class="u-border-2 u-border-black u-border-no-left u-border-no-right u-table-cell"></th>
                 </tr>
@@ -213,27 +192,21 @@ $rol = $_SESSION['usuario']['rol'];
         <input type="number" id="idProducto" name="idProducto" style="display: none;">
 
         <div class="col-md-7">
-          <div class="mb-3 row">
+          <div class="mb-3">
             <label class="form-label fw-bold">Descripción del producto:</label>
             <textarea id="descripcion" name="descripcion" class="form-control shadow" rows="3"
               placeholder="Ej: descripción breve, nombre del producto" required readonly></textarea>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label fw-bold">Categoría del producto:</label>
-            <select id="categorias" name="categorias" class="form-control form-select shadow border-info">
-            
-            </select>
           </div>
         </div>
 
         <div class="col-md-4 mt-3">
           <div class="d-flex flex-wrap shadow p-3">
             <div id="actualizarForm" class="col-9">
-              <label class="form-label" for="tallaA">Tallas</label>
+              <label class="form-label" for="tallaA">Talla</label>
               <input id="tallaA" name="tallaA" type="text" class="form-control border-black" readonly>
               <br>
-              <label class="form-label" for="cantidadA">Cantidad Total</label>
-              <input id="cantidadA" name="cantidadA" type="number" class="w-50" placeholder="Ej: 23" readonly>
+              <label class="form-label" for="cantidadA">Cantidad</label>
+              <input id="cantidadA" name="cantidadA" type="number" class="w-50" placeholder="Ej: 23">
             </div>
           </div>
         </div>
@@ -244,13 +217,13 @@ $rol = $_SESSION['usuario']['rol'];
         <div class="col-3">
           <label class="form-label fw-bold">Precio ($):</label>
           <div class="d-flex">
-            <input id="precio" step="0.01" min="0" name="precio" type="number" class="w-75 shadow border-info" placeholder="Ej: 23.35">
+            <input id="precio" step="0.01" min="0" name="precio" type="number" class="w-75" placeholder="Ej: 23.35">
           </div>
         </div>
         <div class="col-3">
           <label class="form-label fw-bold">Descuento (%):</label>
           <div class="d-flex">
-            <input id="descuento" name="descuento" type="number" class="w-75 shadow border-info" placeholder="Ej: 20" >
+            <input id="descuento" name="descuento" type="number" class="w-75" placeholder="Ej: 20" >
           </div>
         </div>
       </div>
@@ -265,7 +238,6 @@ $rol = $_SESSION['usuario']['rol'];
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-  <script src="../../javascript/Empresa/inventario2.js"></script>
 
 </body>
 

@@ -7,7 +7,25 @@ if (!isset($_SESSION['usuario'])) {
 
 $nombre = $_SESSION['usuario']['nombre'];
 $apellido = $_SESSION['usuario']['apellido'];
+$rol = $_SESSION['usuario']['rol'];
 ?>
+
+<script>
+  // Pasar el valor de PHP a JS de forma segura
+  let rolUsuario = <?php echo json_encode($rol); ?>;
+
+  // Ejecutar el código cuando el DOM esté listo
+  document.addEventListener("DOMContentLoaded", function() {
+    let usuarioElemento = document.getElementById("usuario");
+    if (usuarioElemento) {
+      if (rolUsuario == 1) {
+        usuarioElemento.style.display = "inline";
+      } else {
+        usuarioElemento.style.display = "none";
+      }
+    }
+  });
+</script>
 
 <!DOCTYPE html>
 <html style="font-size: 16px;" lang="es">
@@ -88,19 +106,23 @@ $apellido = $_SESSION['usuario']['apellido'];
             </svg>
           </a>
         </div>
-        <div class="u-custom-menu u-nav-container">
-          <ul class="u-nav u-unstyled u-nav-1">
+        <div class="u-custom-menu u-nav-container d-flex">
+          <ul class="u-nav u-unstyled u-nav-1" style="display:flex;">
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="./"
                 style="padding: 10px 20px;">Inicio</a>
             </li>
-            <li class="u-nav-item"><a
+            <li class="u-nav-item "><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
                 href="inventario.php" style="padding: 10px 20px;">Inventario</a>
             </li>
-            <li class="u-nav-item"><a
+            <li class="u-nav-item "><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
                 href="Productos.php" style="padding: 10px 20px;">Productos</a>
+            </li>
+            <li id="usuario" class="u-nav-item"><a
+                class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
+                href="usuarios.php" style="padding: 10px 20px;">Usuarios</a>
             </li>
           </ul>
         </div>
