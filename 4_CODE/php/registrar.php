@@ -9,11 +9,13 @@ $cedula =!empty($_POST["cedula"]) ? $_POST["cedula"]:"";
 $email =!empty($_POST["email"]) ? $_POST["email"]:"";
 $direccion=!empty($_POST["direccion"]) ? $_POST["direccion"]:"";
 
+$clave_encriptada = password_hash($clave, PASSWORD_DEFAULT);
+
 if($nombre && $apellido && $cedula && $email){
 	include("conexion.php");
 	$consulta=<<<FIN
 		Insert into usuario( ROL_ID, USUARIO_NOMBRE, USUARIO_APELLIDO, USUARIO_CEDULA, USUARIO_TELEFONO, USUARIO_CLAVE, USUARIO_CORREO, USUARIO_DIRECCION)
-		values ("$rol" ,"$nombre", "$apellido", "$cedula", "$telefono","$clave","$email","$direccion") 
+		values ("$rol" ,"$nombre", "$apellido", "$cedula", "$telefono","$clave_encriptada","$email","$direccion") 
 		FIN;
 	if(!mysqli_query($conexion, $consulta)){
 		die ("No se puede agregar al registro");
